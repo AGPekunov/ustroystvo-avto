@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Устройство автомобилей</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #1e1e2f;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 15px;
+    box-sizing: border-box;
+  }
+  h1 { text-align: center; margin-bottom: 10px; font-size: 28px; }
+  .subtitle { color: #a0a0b8; margin-bottom: 30px; text-align: center; }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+  }
+  .card {
+    display: block;
+    background: #ffffff;
+    color: #1e1e2f;
+    border-radius: 14px;
+    padding: 20px 25px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .card h2 { margin: 0 0 5px 0; font-size: 20px; }
+  .card p { margin: 0; color: #55555f; font-size: 14px; }
+  .footer { margin-top: 35px; color: #a0a0b8; font-size: 14px; }
+  .footer a { color: #8ab4f8; text-decoration: none; }
+</style>
+</head>
+<body>
+  <h1>Устройство автомобилей</h1>
+  <p class="subtitle">Выберите раздел:</p>
+  <div class="cards">
+    <a class="card" href="obschee/index.html">
+      <h2>&#128663; Общее устройство автомобилей</h2>
+      <p>Основные части автомобиля, общая компоновка.</p>
+    </a>
+    <a class="card" href="dvigatel/index.html">
+      <h2>&#9889; Двигатель</h2>
+      <p>Устройство и работа двигателя внутреннего сгорания.</p>
+    </a>
+    <a class="card" href="transmissiya/index.html">
+      <h2>&#9881; Трансмиссия</h2>
+      <p>Сцепление, коробка передач, карданная передача, ведущий мост.</p>
+    </a>
+    <a class="card" href="hodovaya/index.html">
+      <h2>&#128679; Ходовая часть</h2>
+      <p>Подвеска, колёса, мосты и рама.</p>
+    </a>
+    <a class="card" href="upravlenie/index.html">
+      <h2>&#128260; Система управления</h2>
+      <p>Рулевое управление и тормозная система.</p>
+    </a>
+    <a class="card" href="elektro/index.html">
+      <h2>&#128161; Электрооборудование</h2>
+      <p>Источники и потребители электроэнергии автомобиля.</p>
+    </a>
+    <a class="card" href="kuzov/index.html">
+      <h2>&#128666; Кузов</h2>
+      <p>Типы кузовов и их устройство.</p>
+    </a>
+  </div>
+  <div class="footer">Учебные материалы по устройству автомобилей</div>
+</body>
+</html>
