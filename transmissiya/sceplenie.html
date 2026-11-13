@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр по сцеплению</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  body { min-height:100vh; background:linear-gradient(160deg,#0f2a4a 0%,#1e3a5f 60%,#274b77 100%); color:#222; padding:20px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  header { color:#fff; text-align:center; padding:28px 10px 20px; }
+  header h1 { font-size:26px; letter-spacing:.5px; }
+  header p { opacity:.85; margin-top:8px; font-size:14px; }
+  .card { background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.25); padding:26px; }
+  .qmeta { font-size:13px; color:#777; margin-bottom:10px; }
+  .question { font-size:18px; font-weight:600; line-height:1.45; margin-bottom:18px; }
+  .opt { display:block; width:100%; text-align:left; background:#f4f6f9; border:2px solid #e2e7ee;
+         border-radius:10px; padding:13px 16px; margin-bottom:10px; font-size:15px; cursor:pointer; transition:.15s; }
+  .opt:hover { border-color:#1e3a5f; background:#eef3fa; }
+  .opt.correct { border-color:#2e9e5b; background:#e8f7ee; }
+  .opt.wrong { border-color:#d64545; background:#fdecec; }
+  .opt:disabled { cursor:default; }
+  .btn { display:block; width:100%; background:#1e3a5f; color:#fff; border:none; border-radius:10px;
+         padding:14px; font-size:16px; font-weight:600; cursor:pointer; margin-top:14px; transition:.15s; }
+  .btn:hover { background:#274b77; }
+  .btn.ghost { background:#fff; color:#1e3a5f; border:2px solid #1e3a5f; }
+  .feedback { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; display:none; }
+  .feedback.ok { display:block; background:#e8f7ee; border-left:4px solid #2e9e5b; }
+  .feedback.no { display:block; background:#fdecec; border-left:4px solid #d64545; }
+  .result-score { font-size:42px; font-weight:700; color:#1e3a5f; text-align:center; margin:10px 0 6px; }
+  .result-verdict { text-align:center; font-size:16px; margin-bottom:20px; }
+  .bar { height:10px; background:#e2e7ee; border-radius:6px; overflow:hidden; margin-bottom:18px; }
+  .bar-fill { height:100%; background:#1e3a5f; width:0; transition:.3s; }
+  .hidden { display:none; }
+  footer { text-align:center; color:rgba(255,255,255,.6); font-size:12px; padding:18px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Тренажёр по сцеплению</h1>
+    <p>Устройство автомобилей · проверка знаний по узлу «сцепление»</p>
+  </header>
+
+  <div class="card" id="start-screen">
+    <h2 style="color:#1e3a5f; margin-bottom:12px;">Как проходит тренажёр</h2>
+    <p style="font-size:15px; line-height:1.6; margin-bottom:16px;">
+      Всего <b>15 вопросов</b> по устройству и работе сцепления. За каждый правильный ответ — 1 балл.
+      После ответа сразу видно верное решение с пояснением. В конце можно выгрузить результат в файл для ведомости.
+    </p>
+    <label style="font-size:14px; display:block; margin-bottom:6px;">Фамилия и имя:</label>
+    <input id="student-name" placeholder="Например: Иванов Иван" style="width:100%; padding:12px 14px; border:2px solid #e2e7ee; border-radius:10px; font-size:15px; margin-bottom:16px;">
+    <button class="btn" onclick="startQuiz()">Начать</button>
+  </div>
+
+  <div class="card hidden" id="quiz-screen">
+    <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="qmeta" id="qmeta"></div>
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Следующий вопрос</button>
+  </div>
+
+  <div class="card hidden" id="result-screen">
+    <h2 style="text-align:center; color:#1e3a5f;">Результат</h2>
+    <div class="result-score" id="score-line"></div>
+    <div class="result-verdict" id="verdict"></div>
+    <div id="mistakes" style="margin-bottom:18px;"></div>
+    <button class="btn" onclick="downloadResult()">Выгрузить результат</button>
+    <button class="btn ghost" onclick="location.reload()">Пройти заново</button>
+  </div>
+
+  <footer>Тренажёр по сцеплению · курс «Устройство автомобилей»</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {q:"Назначение сцепления в автомобиле:",
+   o:["Кратковременно отсоединять двигатель от трансмиссии и плавно соединять их при трогании и переключении передач",
+      "Повышать крутящий момент двигателя перед подачей на колёса",
+      "Изменять направление вращения вала двигателя",
+      "Обеспечивать постоянную связь двигателя с колёсами без разъединения"],
+   a:0, e:"Сцепление разъединяет поток мощности при переключении передач и плавно соединяет двигатель с трансмиссией при трогании с места."},
+  {q:"Главным передающим элементом, за счёт которого сцепление передаёт крутящий момент, является:",
+   o:["Выжимной подшипник","Упругая сила пружин","Сила трения между ведущими и ведомыми поверхностями","Гидравлическое давление"],
+   a:2, e:"Передача момента происходит за счёт трения: ведомый диск зажат между маховиком и нажимным диском."},
+  {q:"Ведомый диск сцепления располагается:",
+   o:["Между маховиком и нажимным диском","На первичном валу коробки передач в корзине сцепления","Между двигателем и корзиной","На вилке выключения сцепления"],
+   a:0, e:"Ведомый диск установлен на шлицах первичного вала КПП и зажат между маховиком и нажимным диском."},
+  {q:"При нажатии на педаль сцепления:",
+   o:["Ведомый диск прижимается к маховику сильнее","Ведомый диск освобождается от прижима — передача момента прекращается","Нажимной диск отходит от маховика, а ведомый остаётся прижат к нему","Пружины сжимаются и диск прижимается к картеру"],
+   a:1, e:"Педаль через привод отводит нажимной диск от ведомого — сцепление «выключено», поток мощности разорван."},
+  {q:"Выжимной (упорный) подшипник служит для:",
+   o:["Смазывания шлицев первичного вала","Передачи усилия от вилки на лепестки диафрагменной пружины при выключении сцепления","Центрирования ведомого диска","Снижения трения между дисками"],
+   a:1, e:"Подшипник упирается в лепестки пружины и отводит нажимной диск, когда водитель выжимает педаль."},
+  {q:"Диафрагменная пружина в сцеплении выполняет роль:",
+   o:["Демпфера крутильных колебаний","Усилие прижимает ведомый диск к маховику (включённое состояние)","Возвратной пружины педали","Направляющей втулки подшипника"],
+   a:1, e:"Лепестки диафрагменной пружины прижимают нажимной диск к маховику, обеспечивая включённое состояние сцепления."},
+  {q:"Свободный ход педали сцепления — это:",
+   o:["Полный ход педали от верхнего до нижнего положения","Ход педали до начала срабатывания механизма выключения","Расстояние между педалью и рулевым колесом","Ход педали после полного выключения сцепления"],
+   a:1, e:"Свободный ход — расстояние, которое педаль проходит без рабочего сопротивления, до начала действия привода."},
+  {q:"Чрезмерно большой свободный ход педали приводит к:",
+   o:["Буксованию сцепления","Неполному выключению сцепления: передачи включаются с трудом, хруст при включении","Повышенному расходу топлива","Перегреву коробки передач"],
+   a:1, e:"При большом свободном ходе вилка не отводит диск полностью — сцепление «ведёт», передачи включаются с затруднением."},
+  {q:"Признак «буксования» сцепления:",
+   o:["Хруст при включении передачи на стоянке","Обороты двигателя растут, а автомобиль не ускоряется пропорционально; запах перегрева","Рывки при трогании с места","Скрежет в картере на нейтрали"],
+   a:1, e:"Диск проскальзывает относительно маховика: двигатель «раскручивается», а тяга не растёт — типичный запах горелых фрикционных накладок."},
+  {q:"Фрикционные накладки ведомого диска изготавливают из:",
+   o:["Закалённой стали","Асбофрикционных и безасбестовых композиционных материалов","Меди и бронзы","Каучука с металлической сеткой"],
+   a:1, e:"Накладки выполняют из фрикционных композиций, способных работать при высоких температурах и создавать силу трения."},
+  {q:"Демпфер крутильных колебаний в ведомом диске необходим, чтобы:",
+   o:["Увеличить силу прижима диска","Сглаживать рывки и вибрации, передаваемые от двигателя в трансмиссию","Облегчать выключение сцепления","Ускорять нагрев диска при трогании"],
+   a:1, e:"Пружины демпфера гасят крутильные колебания коленвала, защищая коробку передач от рывков."},
+  {q:"Признак, указывающий на износ или разрушение выжимного подшипника:",
+   o:["Гул или шелест, усиливающийся при нажатии на педаль сцепления","Дым из-под капота при разгоне","Самопроизвольное включение повышенной передачи","Стук в картере на заглушенном двигателе"],
+   a:0, e:"Подшипник вращается только при нажатой педали, поэтому его износ слышен именно в этот момент — гул, шелест, визг."},
+  {q:"Гидравлический привод сцепления состоит из:",
+   o:["Главного цилиндра, рабочего цилиндра и трубопровода","Вилки и троса","Редуктора и насоса","Компрессора и пневмоцилиндра"],
+   a:0, e:"Усилие с педали передаётся жидкостью: главный цилиндр — трубопровод — рабочий цилиндр — вилка."},
+  {q:"Плавно трогаться с места помогает:",
+   o:["Резкое отпускание педали","Постепенное отпускание педали в начале хода с одновременной подачей топлива","Полное выжимание сцепления при разгоне","Переключение передачи на ходу без сцепления"],
+   a:1, e:"Плавное отпускание обеспечивает постепенное нарастание силы трения — автомобиль трогается без рывка и перегрузки трансмиссии."},
+  {q:"Буксовать сцепление начинает, если:",
+   o:["Свободный ход педали слишком велик","Диски изношены, загрязнены маслом или ослабла прижимная пружина","В коробке передач мало масла","Педаль выжата до упора"],
+   a:1, e:"Причинами буксования являются износ накладок, попадание масла на диски и снижение усилия пружины."}
+];
+
+let order=[], current=0, score=0, answered=false, mistakes=[];
+
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+
+function startQuiz(){
+  const name=document.getElementById('student-name').value.trim();
+  if(!name){ alert('Пожалуйста, впишите фамилию и имя'); return; }
+  window.studentName=name;
+  order=shuffle(QUESTIONS.slice());
+  current=0; score=0; mistakes=[];
+  document.getElementById('start-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion(){
+  answered=false;
+  const q=order[current];
+  document.getElementById('qmeta').textContent='Вопрос '+(current+1)+' из '+QUESTIONS.length+' · баллов набрано: '+score;
+  document.getElementById('bar-fill').style.width=(current/QUESTIONS.length*100)+'%';
+  document.getElementById('question').textContent=q.q;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('feedback').textContent='';
+  document.getElementById('next-btn').classList.add('hidden');
+  const box=document.getElementById('options'); box.innerHTML='';
+  const opts=shuffle(q.o.map((t,i)=>({t:t,i:i})));
+  opts.forEach((o)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=o.t;
+    b.onclick=()=>answer(b,o.i,q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, idx, q){
+  if(answered) return; answered=true;
+  const all=document.querySelectorAll('#options .opt');
+  const correctBtn=Array.from(all).find(b=>b.textContent===q.o[q.a]);
+  if(idx===q.a){ score++; btn.classList.add('correct'); fb(true,'Верно! '+q.e); }
+  else { btn.classList.add('wrong'); if(correctBtn) correctBtn.classList.add('correct');
+         mistakes.push(q.q+'\nВаш ответ: '+q.o[idx]+'\nПравильно: '+q.o[q.a]);
+         fb(false,'Неверно. '+q.e); }
+  all.forEach(b=>b.disabled=true);
+  document.getElementById('next-btn').classList.remove('hidden');
+  document.getElementById('next-btn').textContent = current===QUESTIONS.length-1 ? 'Показать результат' : 'Следующий вопрос';
+}
+
+function fb(ok,text){
+  const f=document.getElementById('feedback');
+  f.className='feedback '+(ok?'ok':'no'); f.textContent=text;
+}
+
+function nextQuestion(){
+  current++;
+  if(current<QUESTIONS.length){ showQuestion(); }
+  else { showResult(); }
+}
+
+function showResult(){
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('result-screen').classList.remove('hidden');
+  const pct=Math.round(score/QUESTIONS.length*100);
+  document.getElementById('score-line').textContent=score+' из '+QUESTIONS.length;
+  let v='Материал нужно повторить. Разберите ошибки ниже и пройдите тренажёр снова.';
+  if(pct>=80) v='Отлично! Материал по сцеплению усвоен.';
+  else if(pct>=60) v='Хорошо, но есть пробелы — перечитайте темы с ошибками.';
+  document.getElementById('verdict').textContent=v;
+  const m=document.getElementById('mistakes');
+  if(mistakes.length){
+    m.innerHTML='<h3 style="color:#1e3a5f; margin-bottom:10px;">Ошибки ('+mistakes.length+'):</h3>'+
+      mistakes.map(x=>'<div style="font-size:14px; line-height:1.5; background:#f4f6f9; border-left:4px solid #d64545; border-radius:8px; padding:10px 12px; margin-bottom:8px; white-space:pre-line;">'+x+'</div>').join('');
+  } else m.innerHTML='<p style="color:#2e9e5b; font-weight:600; text-align:center;">Без ошибок!</p>';
+}
+
+function downloadResult(){
+  const pct=Math.round(score/QUESTIONS.length*100);
+  let line='Тренажёр по сцеплению\nСтудент: '+window.studentName+'\nРезультат: '+score+' из '+QUESTIONS.length+' ('+pct+'%)\nОшибок: '+mistakes.length+'\nДата: '+new Date().toLocaleString('ru-RU')+'\n';
+  if(mistakes.length) line+='\nРазбор ошибок:\n'+mistakes.join('\n---\n');
+  const blob=new Blob([line],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='Тренажёр_сцепление_'+window.studentName.replace(/\s+/g,'_')+'.txt';
+  a.click(); URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Экзамен: Трансмиссия</title>
+<style>
+body{font-family:Georgia,'Times New Roman',serif;max-width:860px;margin:0 auto;padding:16px;background:#f4f6f8;color:#1a2333;}
+h1{text-align:center;font-size:22px;}
+.info{background:#fff;border:1px solid #cfd8e3;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.blk{font-size:18px;margin:22px 0 6px;color:#0d3b66;border-bottom:2px solid #0d3b66;padding-bottom:4px;}
+.q{background:#fff;border:1px solid #d7dee8;border-radius:6px;padding:10px 14px;margin:8px 0;}
+.qt{font-weight:bold;margin-bottom:6px;}
+.opt{display:block;padding:3px 0;}
+.expl{display:none;margin-top:8px;padding:8px;background:#eef6ef;border-left:4px solid #2e7d32;border-radius:4px;font-size:15px;}
+.expl.bad{background:#fdecec;border-left-color:#c62828;}
+#timer{position:sticky;top:0;background:#0d3b66;color:#fff;padding:8px 14px;border-radius:6px;font-size:18px;text-align:center;display:none;}
+#timer.low{background:#c62828;animation:blink 1s infinite;}
+@keyframes blink{50%{opacity:.55;}}
+#result{display:none;background:#fff;border:2px solid #0d3b66;border-radius:8px;padding:14px;margin:14px 0;}
+.grade{font-size:26px;text-align:center;margin:8px 0;}
+button{font-size:16px;padding:10px 18px;margin:6px 6px 6px 0;background:#0d3b66;color:#fff;border:0;border-radius:6px;cursor:pointer;}
+button:disabled{background:#9aa7b5;cursor:not-allowed;}
+input[type=text]{padding:8px;font-size:16px;border:1px solid #9aa7b5;border-radius:4px;width:260px;}
+#noprint{display:none;}
+.user-select-block{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+input[type=text]{user-select:text;-webkit-user-select:text;}
+@media print{body>*{display:none!important;}body:after{content:"Печать экзамена запрещена. Обратитесь к преподавателю.";font-size:20px;}}
+</style>
+</head>
+<body>
+<h1>Экзамен: «Трансмиссия автомобиля»</h1>
+<div class="info user-select-block" id="login">
+<b>Фамилия, имя:</b> <input type="text" id="fio" autocomplete="off">
+&nbsp;&nbsp;<b>Группа:</b> <input type="text" id="grp" autocomplete="off" size="8">
+<button onclick="startExam()">Начать экзамен</button>
+</div>
+<div id="timer">Осталось: 20:00</div>
+<div class="info user-select-block">
+<b>Инструкция.</b> Экзамен длится 20 минут, отсчёт начинается после ввода фамилии и группы.
+В каждом вопросе один правильный ответ. Отвечать можно по порядку, отмеченные ответы можно менять.
+Когда ответите на все 25 вопросов, кнопка «Завершить экзамен и проверить» станет активной.
+Выделение текста и копирование отключены.
+</div>
+<div id="counter" style="margin:6px 0;font-weight:bold;"></div>
+<h2 class="blk">Блок 1. Общие понятия и сцепление</h2>
+<div class="q" id="q1"><div class="qt">1. Что такое трансмиссия автомобиля?</div><label class="opt"><input type="radio" name="q1" value="а"> а) Совокупность механизмов, передающих крутящий момент от двигателя к ведущим колёсам</label><label class="opt"><input type="radio" name="q1" value="б"> б) Система зажигания двигателя</label><label class="opt"><input type="radio" name="q1" value="в"> в) Механизм, очищающий выхлопные газы</label><label class="opt"><input type="radio" name="q1" value="г"> г) Система охлаждения двигателя</label><div class="expl" id="e1"></div></div>
+<div class="q" id="q2"><div class="qt">2. Назначение сцепления:</div><label class="opt"><input type="radio" name="q2" value="а"> а) Повышать мощность двигателя</label><label class="opt"><input type="radio" name="q2" value="б"> б) Плавно соединять и разъединять двигатель и коробку передач</label><label class="opt"><input type="radio" name="q2" value="в"> в) Фильтровать трансмиссионное масло</label><label class="opt"><input type="radio" name="q2" value="г"> г) Охлаждать коробку передач</label><div class="expl" id="e2"></div></div>
+<div class="q" id="q3"><div class="qt">3. Диск сцепления зажимается между маховиком и:</div><label class="opt"><input type="radio" name="q3" value="а"> а) Нажимным диском (корзиной сцепления)</label><label class="opt"><input type="radio" name="q3" value="б"> б) Ведущим валом КПП</label><label class="opt"><input type="radio" name="q3" value="в"> в) Карданным валом</label><label class="opt"><input type="radio" name="q3" value="г"> г) Выжимным подшипником</label><div class="expl" id="e3"></div></div>
+<div class="q" id="q4"><div class="qt">4. При пробуксовке сцепления (педаль отпущена, а машина не тянет) наиболее вероятно, что:</div><label class="opt"><input type="radio" name="q4" value="а"> а) Двигатель не прогрет</label><label class="opt"><input type="radio" name="q4" value="б"> б) В баке плохое топливо</label><label class="opt"><input type="radio" name="q4" value="в"> в) Неисправен генератор</label><label class="opt"><input type="radio" name="q4" value="г"> г) Ведомый диск изношен и слабо прижимается</label><div class="expl" id="e4"></div></div>
+<div class="q" id="q5"><div class="qt">5. Как работает гидравлический привод сцепления?</div><label class="opt"><input type="radio" name="q5" value="а"> а) Усилие передаётся тросом</label><label class="opt"><input type="radio" name="q5" value="б"> б) Усилие педали передаётся жидкостью через главный и рабочий цилиндры</label><label class="opt"><input type="radio" name="q5" value="в"> в) Усилие передаётся электромотором</label><label class="opt"><input type="radio" name="q5" value="г"> г) Усилие создаётся вакуумом впускного коллектора</label><div class="expl" id="e5"></div></div>
+<h2 class="blk">Блок 2. Механическая коробка передач</h2>
+<div class="q" id="q6"><div class="qt">6. Передаточное число больше единицы означает передачу:</div><label class="opt"><input type="radio" name="q6" value="а"> а) Повышающую: скорость растёт, момент падает</label><label class="opt"><input type="radio" name="q6" value="б"> б) Прямую</label><label class="opt"><input type="radio" name="q6" value="в"> в) Понижающую: момент растёт, скорость падает</label><label class="opt"><input type="radio" name="q6" value="г"> г) Нейтральную</label><div class="expl" id="e6"></div></div>
+<div class="q" id="q7"><div class="qt">7. Задача синхронизатора в МКПП:</div><label class="opt"><input type="radio" name="q7" value="а"> а) Смазывать шестерни</label><label class="opt"><input type="radio" name="q7" value="б"> б) Защищать картер от пыли</label><label class="opt"><input type="radio" name="q7" value="в"> в) Увеличивать крутящий момент</label><label class="opt"><input type="radio" name="q7" value="г"> г) Выровнять скорости вала и шестерни перед включением передачи</label><div class="expl" id="e7"></div></div>
+<div class="q" id="q8"><div class="qt">8. Вилка переключения передач перемещает:</div><label class="opt"><input type="radio" name="q8" value="а"> а) Муфту синхронизатора</label><label class="opt"><input type="radio" name="q8" value="б"> б) Маховик</label><label class="opt"><input type="radio" name="q8" value="в"> в) Диск сцепления</label><label class="opt"><input type="radio" name="q8" value="г"> г) Карданный вал</label><div class="expl" id="e8"></div></div>
+<div class="q" id="q9"><div class="qt">9. Промежуточная шестерня заднего хода нужна, чтобы:</div><label class="opt"><input type="radio" name="q9" value="а"> а) Увеличить максимальную скорость</label><label class="opt"><input type="radio" name="q9" value="б"> б) Уменьшить расход топлива</label><label class="opt"><input type="radio" name="q9" value="в"> в) Изменить направление вращения вала и дать машине ехать назад</label><label class="opt"><input type="radio" name="q9" value="г"> г) Снизить шум КПП</label><div class="expl" id="e9"></div></div>
+<div class="q" id="q10"><div class="qt">10. Какое масло заливают в механическую КПП легкового автомобиля?</div><label class="opt"><input type="radio" name="q10" value="а"> а) Моторное 5W-40</label><label class="opt"><input type="radio" name="q10" value="б"> б) Антифриз</label><label class="opt"><input type="radio" name="q10" value="в"> в) Тормозную жидкость DOT-4</label><label class="opt"><input type="radio" name="q10" value="г"> г) Трансмиссионное, например 75W-90</label><div class="expl" id="e10"></div></div>
+<h2 class="blk">Блок 3. Автомат, вариатор, робот</h2>
+<div class="q" id="q11"><div class="qt">11. Что в автоматической КПП выполняет роль сцепления?</div><label class="opt"><input type="radio" name="q11" value="а"> а) Гидротрансформатор</label><label class="opt"><input type="radio" name="q11" value="б"> б) Двухмассовый маховик</label><label class="opt"><input type="radio" name="q11" value="в"> в) Выжимной подшипник</label><label class="opt"><input type="radio" name="q11" value="г"> г) Синхронизатор</label><div class="expl" id="e11"></div></div>
+<div class="q" id="q12"><div class="qt">12. Планетарный ряд в АКПП позволяет:</div><label class="opt"><input type="radio" name="q12" value="а"> а) Охлаждать масло</label><label class="opt"><input type="radio" name="q12" value="б"> б) Получать разные передаточные числа одним компактным узлом</label><label class="opt"><input type="radio" name="q12" value="в"> в) Заводить двигатель</label><label class="opt"><input type="radio" name="q12" value="г"> г) Фильтровать жидкость ATF</label><div class="expl" id="e12"></div></div>
+<div class="q" id="q13"><div class="qt">13. Чем переключаются передачи внутри классической АКПП?</div><label class="opt"><input type="radio" name="q13" value="а"> а) Вилками и синхронизаторами</label><label class="opt"><input type="radio" name="q13" value="б"> б) Крестовинами кардана</label><label class="opt"><input type="radio" name="q13" value="в"> в) Только педалью газа</label><label class="opt"><input type="radio" name="q13" value="г"> г) Фрикционами и тормозными лентами</label><div class="expl" id="e13"></div></div>
+<div class="q" id="q14"><div class="qt">14. Как меняется передаточное число в вариаторе?</div><label class="opt"><input type="radio" name="q14" value="а"> а) Плавным перемещением конусных шкивов, между которыми работает ремень</label><label class="opt"><input type="radio" name="q14" value="б"> б) Переключением зубчатых пар</label><label class="opt"><input type="radio" name="q14" value="в"> в) Включением планетарного ряда</label><label class="opt"><input type="radio" name="q14" value="г"> г) Изменением давления в гидротрансформаторе</label><div class="expl" id="e14"></div></div>
+<div class="q" id="q15"><div class="qt">15. Роботизированная коробка — это:</div><label class="opt"><input type="radio" name="q15" value="а"> а) Разновидность гидромеханического автомата</label><label class="opt"><input type="radio" name="q15" value="б"> б) Механическая коробка с автоматическим управлением сцеплением и передачами</label><label class="opt"><input type="radio" name="q15" value="в"> в) Бесступенчатый ремённый вариатор</label><label class="opt"><input type="radio" name="q15" value="г"> г) Гидротрансформатор с планетарным рядом</label><div class="expl" id="e15"></div></div>
+<h2 class="blk">Блок 4. Кардан и главная передача</h2>
+<div class="q" id="q16"><div class="qt">16. Зачем нужен карданный вал?</div><label class="opt"><input type="radio" name="q16" value="а"> а) Увеличивать передаточное число</label><label class="opt"><input type="radio" name="q16" value="б"> б) Снижать уровень шума выхлопа</label><label class="opt"><input type="radio" name="q16" value="в"> в) Передавать крутящий момент от КПП к главной передаче под изменяющимся углом</label><label class="opt"><input type="radio" name="q16" value="г"> г) Охлаждать масло КПП</label><div class="expl" id="e16"></div></div>
+<div class="q" id="q17"><div class="qt">17. Крестовина карданного вала обеспечивает:</div><label class="opt"><input type="radio" name="q17" value="а"> а) Вращение вала под углом</label><label class="opt"><input type="radio" name="q17" value="б"> б) Сцепление двигателя с КПП</label><label class="opt"><input type="radio" name="q17" value="в"> в) Дифференциал между колёсами</label><label class="opt"><input type="radio" name="q17" value="г"> г) Переключение передач</label><div class="expl" id="e17"></div></div>
+<div class="q" id="q18"><div class="qt">18. Главная передача состоит из:</div><label class="opt"><input type="radio" name="q18" value="а"> а) Двух дисков сцепления</label><label class="opt"><input type="radio" name="q18" value="б"> б) Ведущей и ведомой конических шестерён</label><label class="opt"><input type="radio" name="q18" value="в"> в) Крестовины и фланца</label><label class="opt"><input type="radio" name="q18" value="г"> г) Планетарного ряда и фрикционов</label><div class="expl" id="e18"></div></div>
+<div class="q" id="q19"><div class="qt">19. Назначение главной передачи:</div><label class="opt"><input type="radio" name="q19" value="а"> а) Разъединять двигатель и колёса</label><label class="opt"><input type="radio" name="q19" value="б"> б) Обеспечивать задний ход</label><label class="opt"><input type="radio" name="q19" value="в"> в) Окончательно увеличить крутящий момент перед колёсами</label><label class="opt"><input type="radio" name="q19" value="г"> г) Смазывать подшипники КПП</label><div class="expl" id="e19"></div></div>
+<div class="q" id="q20"><div class="qt">20. Как смазывают крестовину карданного вала с тавотницами?</div><label class="opt"><input type="radio" name="q20" value="а"> а) Моторным маслом через щуп</label><label class="opt"><input type="radio" name="q20" value="б"> б) Жидкостью ATF через штуцер</label><label class="opt"><input type="radio" name="q20" value="в"> в) Никак — она не требует обслуживания</label><label class="opt"><input type="radio" name="q20" value="г"> г) Консистентной смазкой через шприц-пресс</label><div class="expl" id="e20"></div></div>
+<h2 class="blk">Блок 5. Дифференциал, ШРУС, полный привод</h2>
+<div class="q" id="q21"><div class="qt">21. Зачем в ведущем мосту дифференциал?</div><label class="opt"><input type="radio" name="q21" value="а"> а) Включать полный привод</label><label class="opt"><input type="radio" name="q21" value="б"> б) Позволять колёсам вращаться с разными скоростями в повороте</label><label class="opt"><input type="radio" name="q21" value="в"> в) Повышать передаточное число</label><label class="opt"><input type="radio" name="q21" value="г"> г) Смазывать шестерни главной передачи</label><div class="expl" id="e21"></div></div>
+<div class="q" id="q22"><div class="qt">22. Одно колесо стоит на льду и буксует, второе — на сухом асфальте. Что произойдёт без блокировки?</div><label class="opt"><input type="radio" name="q22" value="а"> а) Оба колеса будут вращаться одинаково</label><label class="opt"><input type="radio" name="q22" value="б"> б) Машина поедет равномерно</label><label class="opt"><input type="radio" name="q22" value="в"> в) Буксующее колесо раскрутится, а второе остановится — машина не сдвинется</label><label class="opt"><input type="radio" name="q22" value="г"> г) Сгорит главная передача</label><div class="expl" id="e22"></div></div>
+<div class="q" id="q23"><div class="qt">23. ШРУС передаёт крутящий момент на колесо:</div><label class="opt"><input type="radio" name="q23" value="а"> а) Только строго по прямой</label><label class="opt"><input type="radio" name="q23" value="б"> б) Только при выключенном сцеплении</label><label class="opt"><input type="radio" name="q23" value="в"> в) Через гидротрансформатор</label><label class="opt"><input type="radio" name="q23" value="г"> г) Под углом при повороте управляемых колёс</label><div class="expl" id="e23"></div></div>
+<div class="q" id="q24"><div class="qt">24. Какая фрикционная муфта часто используется для подключения заднего привода в кроссоверах?</div><label class="opt"><input type="radio" name="q24" value="а"> а) Haldex</label><label class="opt"><input type="radio" name="q24" value="б"> б) Гидротрансформатор</label><label class="opt"><input type="radio" name="q24" value="в"> в) Синхронизатор</label><label class="opt"><input type="radio" name="q24" value="г"> г) Крестовина</label><div class="expl" id="e24"></div></div>
+<div class="q" id="q25"><div class="qt">25. Типичный признак изношенного наружного ШРУСа:</div><label class="opt"><input type="radio" name="q25" value="а"> а) Свист на холостом ходу</label><label class="opt"><input type="radio" name="q25" value="б"> б) Перегрев тормозов</label><label class="opt"><input type="radio" name="q25" value="в"> в) Хруст при повороте руля с разгоном</label><label class="opt"><input type="radio" name="q25" value="г"> г) Провал педали газа</label><div class="expl" id="e25"></div></div>
+
+<div id="counter"></div>
+<button id="fin" onclick="finishExam()">Завершить экзамен и проверить</button>
+<button id="dl" onclick="downloadResult()">Скачать результат (txt)</button>
+<div id="result"></div>
+<script>
+
+var SECONDS = 20*60, left = SECONDS, tick = null, finished = false, blurs = 0, keyArr = null;
+function startExam(){
+  var f = document.getElementById('fio'), g = document.getElementById('grp');
+  if(!f || !g) return;
+  if(f.value.replace(/ /g,'').length < 2){ alert('Введите фамилию и имя'); return; }
+  if(g.value.replace(/ /g,'').length < 1){ alert('Введите группу'); return; }
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('timer').style.display = 'block';
+  tick = setInterval(runTimer, 1000);
+}
+function runTimer(){
+  left = left - 1;
+  if(left <= 0){ finishExam(); return; }
+  var m = Math.floor(left/60), s = left%60, t = document.getElementById('timer');
+  var ss = s < 10 ? '0'+s : ''+s;
+  t.textContent = 'Осталось: ' + m + ':' + ss;
+  if(left <= 120){ t.className = 'low'; }
+}
+function getKey(){
+  if(keyArr) return keyArr;
+  try{
+    var s = atob('YWJjZGJjZGFjZGFiZGFiY2FiY2RiY2RhYw=='), arr = [];
+    for(var i=0;i<s.length;i++) arr.push(s.charAt(i));
+    keyArr = arr; return arr;
+  }catch(e){ return null; }
+}
+
+function cyr(k){ return 'абвг'.charAt('abcd'.indexOf(k)); }
+function finishExam(){
+  if(finished) return;
+  var key = getKey();
+  if(!key){ alert('Ошибка данных экзамена'); return; }
+  var answered = 0, score = 0, blockOk = [0,0,0,0,0];
+  var report = [];
+  for(var i=1;i<=25;i++){
+    var rs = document.getElementsByName('q'+i), val = '';
+    for(var j=0;j<rs.length;j++){ if(rs[j].checked) val = rs[j].value; }
+    if(val !== '') answered++;
+    var ok = (val !== '' && 'абвг'.indexOf(val) === 'abcd'.indexOf(key[i-1]));
+    if(ok){ score++; blockOk[Math.floor((i-1)/5)]++; }
+    var e = document.getElementById('e'+i);
+    if(e){
+      if(val === ''){
+        e.className = 'expl bad';
+        e.innerHTML = 'Нет ответа. Правильный ответ: ' + cyr(key[i-1]) + ')';
+      } else if(ok){
+        e.className = 'expl';
+        e.innerHTML = 'Верно!';
+      } else {
+        e.className = 'expl bad';
+        e.innerHTML = 'Ваш ответ: ' + val + '). Правильный ответ: ' + cyr(key[i-1]) + ')';
+      }
+    }
+    report.push((i) + '. ваш ответ: ' + (val ? val : '-') + ', верно: ' + key[i-1]);
+  }
+  if(answered < 25){ alert('Ответьте на все вопросы. Осталось: ' + (25-answered)); return; }
+  finished = true;
+  if(tick) clearInterval(tick);
+  document.getElementById('timer').style.display = 'none';
+  var pct = Math.round(score/25*100), grade = '2';
+  if(pct >= 90) grade = '5'; else if(pct >= 70) grade = '4'; else if(pct >= 50) grade = '3';
+  var names = ['сцепление','механическая КПП','автомат и вариатор','кардан и главная передача','дифференциал и полный привод'];
+  var stat = '<div class="grade">Оценка: ' + grade + ' (' + score + ' из 25, ' + pct + '%)</div>';
+  stat += '<div>Потерь фокуса окна: ' + blurs + '</div><div><b>По блокам:</b></div>';
+  for(var b=0;b<5;b++) stat += '<div>' + names[b] + ': ' + blockOk[b] + ' из 5</div>';
+  var r = document.getElementById('result');
+  r.innerHTML = stat;
+  r.style.display = 'block';
+  r.scrollIntoView();
+  window._report = report;
+  window._grade = grade;
+}
+function downloadResult(){
+  var fio = document.getElementById('fio').value, grp = document.getElementById('grp').value;
+  var d = new Date(), ds = d.toLocaleDateString('ru-RU') + ' ' + d.toLocaleTimeString('ru-RU');
+  var rep = window._report || [];
+  var txt = 'ВЕДОМОСТЬ ЭКЗАМЕНА: Трансмиссия\nФИО: ' + fio + '\nГруппа: ' + grp + '\nДата: ' + ds + '\nОценка: ' + (window._grade||'-') + '\nПотерь фокуса окна: ' + blurs + '\n\nОтветы:\n' + rep.join('\n');
+  var blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ekzamen_' + (fio||'student') + '.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+document.addEventListener('copy', function(e){ var t=e.target; if(t && t.tagName==='INPUT') return; e.preventDefault(); });
+document.addEventListener('cut', function(e){ var t=e.target; if(t && t.tagName==='INPUT') return; e.preventDefault(); });
+document.addEventListener('selectstart', function(e){ var t=e.target; if(t && t.tagName==='INPUT') return; e.preventDefault(); });
+document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+document.addEventListener('keydown', function(e){
+  if(e.key === 'F12'){ e.preventDefault(); return; }
+  if(e.ctrlKey || e.metaKey){
+    var k = (e.key||'').toLowerCase();
+    if(k==='u'||k==='s'||k==='p'||k==='c'||k==='a'){ e.preventDefault(); }
+  }
+});
+document.addEventListener('visibilitychange', function(){ if(document.hidden){ blurs++; } });
+
+</script>
+<noscript><div class="info" style="background:#fff3cd;">Для таймера и автоматической проверки нужен браузер. Вопросы видны и без скриптов — их можно решить письменно.</div></noscript>
+</body>
+</html>

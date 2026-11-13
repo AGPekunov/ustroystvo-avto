@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: коробка передач</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .container { width: 100%; max-width: 560px; }
+  .panel {
+    background: #ffffff; border-radius: 14px;
+    padding: 28px 26px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  h1 { color: #1e3c72; font-size: 22px; margin-bottom: 6px; }
+  .sub { color: #666; font-size: 14px; margin-bottom: 20px; }
+  label { display: block; font-size: 14px; color: #333; margin: 12px 0 4px; }
+  input[type=text] {
+    width: 100%; padding: 10px 12px; font-size: 15px;
+    border: 1px solid #c8c8c8; border-radius: 8px;
+  }
+  button {
+    margin-top: 18px; width: 100%; padding: 12px;
+    font-size: 16px; font-weight: 600; color: #fff;
+    background: #2a5298; border: none; border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: #1e3c72; }
+  .qnum { color: #2a5298; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  .qtext { font-size: 17px; color: #222; margin-bottom: 16px; line-height: 1.45; }
+  .opt {
+    display: block; width: 100%; text-align: left;
+    padding: 12px 14px; margin-bottom: 10px;
+    font-size: 15px; line-height: 1.4; color: #222;
+    background: #f2f4f8; border: 2px solid transparent;
+    border-radius: 8px; cursor: pointer;
+  }
+  .opt:hover { border-color: #2a5298; }
+  .opt.correct { background: #e2f4e2; border-color: #2e8b57; color: #1d5c37; font-weight: 600; }
+  .opt.wrong { background: #fbe3e3; border-color: #c0392b; color: #7a2417; }
+  .opt:disabled { cursor: default; }
+  .expl {
+    margin-top: 8px; padding: 12px 14px;
+    background: #eef2f9; border-left: 4px solid #2a5298;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px; color: #333; line-height: 1.5;
+  }
+  .score { font-size: 26px; font-weight: 700; color: #1e3c72; text-align: center; margin: 10px 0 6px; }
+  .verdict { text-align: center; font-size: 15px; color: #555; margin-bottom: 14px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div id="startPanel" class="panel">
+    <h1>Тренажёр: коробка передач</h1>
+    <p class="sub">15 вопросов по устройству и работе КПП. Варианты ответов перемешиваются при каждом запуске. В конце — оценка и выгрузка ведомости.</p>
+    <label for="fio">Фамилия и имя</label>
+    <input type="text" id="fio" placeholder="Иванов Иван">
+    <label for="group">Группа</label>
+    <input type="text" id="group" placeholder="АТ-21">
+    <button onclick="startQuiz()">Начать</button>
+  </div>
+
+  <div id="quizPanel" class="panel hidden">
+    <div class="qnum" id="qnum"></div>
+    <div class="qtext" id="qtext"></div>
+    <div id="answers"></div>
+    <div class="expl hidden" id="expl"></div>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">Дальше</button>
+  </div>
+
+  <div id="resultPanel" class="panel hidden">
+    <h1 style="text-align:center;">Результат</h1>
+    <div class="score" id="scoreLine"></div>
+    <div class="verdict" id="verdictLine"></div>
+    <button onclick="downloadResult()">Скачать ведомость</button>
+    <button onclick="location.reload()" style="background:#5a6b85;">Пройти ещё раз</button>
+  </div>
+
+</div>
+
+<script>
+var QUESTIONS = [{"q": "Для чего предназначена коробка передач?", "a": ["Для изменения крутящего момента и скорости движения", "Для передачи крутящего момента от колёс к двигателю", "Для охлаждения трансмиссионного масла", "Для запуска двигателя стартером"], "c": 0, "e": "КПП изменяет крутящий момент и скорость: передачи с разным передаточным числом позволяют трогаться, разгоняться и двигаться с разной скоростью при оборотах двигателя в рабочем диапазоне."}, {"q": "Что называется передаточным числом передачи?", "a": ["Отношение числа зубьев ведомой шестерни к числу зубьев ведущей", "Отношение числа зубьев ведущей шестерни к числу зубьев ведомой", "Отношение скорости автомобиля к оборотам двигателя", "Число передач в коробке"], "c": 0, "e": "Передаточное число — отношение числа зубьев ведомой шестерни к ведущей (или их оборотов). Чем оно больше, тем больше крутящий момент, но меньше скорость."}, {"q": "Какая передача имеет наибольшее передаточное число?", "a": ["Первая", "Четвёртая", "Пятая", "Заднего хода это не касается"], "c": 0, "e": "На первой передаче передаточное число наибольшее — она даёт максимальный крутящий момент для трогания и медленного движения."}, {"q": "Каким образом включается задний ход?", "a": ["Через дополнительную промежуточную шестерню", "Размыканием второй передачи", "Автоматически при удержании рычага влево", "Задний ход включается только при остановленном двигателе"], "c": 0, "e": "Для реверса между шестернями вводится дополнительная промежуточная шестерня — она меняет направление вращения вторичного вала."}, {"q": "Какова роль синхронизатора в коробке передач?", "a": ["Выравнивает скорости вала и включаемой шестерни для бесшумного включения", "Смазывает шестерни трансмиссионным маслом", "Увеличивает крутящий момент на первой передаче", "Удерживает рычаг в нейтральном положении"], "c": 0, "e": "Синхронизатор выравнивает частоты вращения соединяемых деталей, поэтому передачи включаются бесшумно и без удара зубьев."}, {"q": "Что произойдёт при включении передачи при не полностью выжатом сцеплении?", "a": ["Шум и затруднённое включение, износ зубьев шестерён", "Ничего, сцепление на это не влияет", "Двигатель заглохнет гарантированно", "Включится сразу две передачи"], "c": 0, "e": "При неполном выключении сцепления первичный вал ещё вращается, синхронизатору тяжело выровнять скорости — слышен скрежет, зубья муфт и шестерён изнашиваются."}, {"q": "Для чего в КПП служит первичный вал?", "a": ["Передаёт крутящий момент от сцепления на промежуточный вал", "Передаёт крутящий момент на колёса", "Служит для крепления коробки к двигателю", "Приводит в действие синхронизаторы"], "c": 0, "e": "Первичный (ведущий) вал соединён с диском сцепления и передаёт момент двигателя на промежуточный вал."}, {"q": "Что означает положение рычага «нейтраль»?", "a": ["Крутящий момент от двигателя на колёса не передаётся", "Включена первая передача без выжатого сцепления", "Двигатель работает на максимальных оборотах", "Заблокирован вторичный вал"], "c": 0, "e": "В нейтрали шестерни вторичного вала свободно вращаются, не зацепляясь за вал — момент на колёса не идёт."}, {"q": "Почему на понижающих передачах автомобиль движется медленнее?", "a": ["Из-за большого передаточного числа обороты колёс снижаются", "Из-за уменьшения мощности двигателя", "Из-за меньшего количества масла в коробке", "Из-за нагрева сцепления"], "c": 0, "e": "Большое передаточное число снижает частоту вращения выходного вала: момент растёт, скорость падает."}, {"q": "Причина выбивания (самовыключения) передачи?", "a": ["Износ фиксирующего механизма, вилки или подшипников", "Низкий уровень тормозной жидкости", "Высокое давление в шинах", "Перегрев двигателя"], "c": 0, "e": "Передача выбивается при износе фиксатора (шарика и пружины), вилки переключения, подшипников валов или шестерён."}, {"q": "Какое масло применяется в механической КПП?", "a": ["Трансмиссионное (по классу вязкости и спецификации производителя)", "Моторное с присадками для сцепления", "Тормозная жидкость DOT-4", "Вода с антифризом"], "c": 0, "e": "В МКПП заливается трансмиссионное масло нужного класса вязкости и спецификации — смотрите руководство по эксплуатации."}, {"q": "Что такое вилка переключения передач?", "a": ["Деталь, перемещающая муфту синхронизатора при переключении", "Часть рулевого механизма", "Держатель карданного вала", "Элемент сцепления, передающий момент"], "c": 0, "e": "Вилка сидит на штоке и перемещает муфту синхронизатора, соединяя шестерню с валом — так включается передача."}, {"q": "Какой привод переключения передач применяется в КПП переднеприводных автомобилей?", "a": ["Тросовый или кулисный внутри картера", "Гидравлический от главного цилиндра сцепления", "Пневматический", "Электрический с сервоприводом"], "c": 0, "e": "На переднеприводных авто рычаг связан с коробкой тросами или кулисой, размещённой прямо в картере КПП."}, {"q": "Почему нельзя включать задний ход на ходу вперёд?", "a": ["Промежуточная шестерня и муфта не рассчитаны на ударовое зацепление — шестерни разрушатся", "Может заблокироваться рулевое управление", "Заглохнет двигатель без последствий", "Сработает стояночный тормоз"], "c": 0, "e": "Промежуточная шестерня заднего хода не имеет синхронизатора: при ударном зацеплении на ходу зубья разрушаются."}, {"q": "Что произойдёт при движении с низким уровнем трансмиссионного масла?", "a": ["Перегрев и ускоренный износ шестерён и подшипников", "Двигатель перегреется", "Увеличится расход топлива впрыском", "Ничего, масло в КПП не нужно"], "c": 0, "e": "Без масла шестерни и подшипники перегреваются и изнашиваются — коробка выходит из строя за короткое время."}];
+var fio = "", group = "";
+var order = [], answers = [], current = -1, correctCount = 0;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function startQuiz() {
+  fio = document.getElementById("fio").value.trim();
+  group = document.getElementById("group").value.trim();
+  if (!fio) { alert("Введите фамилию и имя"); return; }
+  order = [];
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var opts = [];
+    for (var k = 0; k < QUESTIONS[i].a.length; k++) opts.push(k);
+    order.push(shuffle(opts));
+  }
+  answers = [];
+  correctCount = 0;
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("quizPanel").classList.remove("hidden");
+  current = -1;
+  nextQuestion();
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= QUESTIONS.length) { showResult(); return; }
+  var q = QUESTIONS[current];
+  document.getElementById("qnum").textContent = "Вопрос " + (current + 1) + " из " + QUESTIONS.length;
+  document.getElementById("qtext").textContent = q.q;
+  document.getElementById("expl").classList.add("hidden");
+  document.getElementById("nextBtn").classList.add("hidden");
+  var box = document.getElementById("answers");
+  box.innerHTML = "";
+  var opts = order[current];
+  for (var i = 0; i < opts.length; i++) {
+    var b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = q.a[opts[i]];
+    b.setAttribute("data-orig", opts[i]);
+    b.onclick = function() { pick(this); };
+    box.appendChild(b);
+  }
+}
+
+function pick(btn) {
+  var q = QUESTIONS[current];
+  var chosen = parseInt(btn.getAttribute("data-orig"), 10);
+  var isRight = (chosen === q.c);
+  answers.push(chosen);
+  if (isRight) correctCount++;
+  var all = document.getElementById("answers").querySelectorAll(".opt");
+  for (var i = 0; i < all.length; i++) {
+    all[i].disabled = true;
+    var orig = parseInt(all[i].getAttribute("data-orig"), 10);
+    if (orig === q.c) all[i].classList.add("correct");
+    else if (all[i] === btn) all[i].classList.add("wrong");
+  }
+  var e = document.getElementById("expl");
+  e.textContent = q.e;
+  e.classList.remove("hidden");
+  var nb = document.getElementById("nextBtn");
+  nb.textContent = (current === QUESTIONS.length - 1) ? "Показать результат" : "Дальше";
+  nb.classList.remove("hidden");
+}
+
+function grade(pct) {
+  if (pct >= 90) return 5;
+  if (pct >= 75) return 4;
+  if (pct >= 60) return 3;
+  return 2;
+}
+
+function showResult() {
+  document.getElementById("quizPanel").classList.add("hidden");
+  document.getElementById("resultPanel").classList.remove("hidden");
+  var n = QUESTIONS.length;
+  var pct = Math.round(correctCount * 100 / n);
+  var g = grade(pct);
+  document.getElementById("scoreLine").textContent = correctCount + " из " + n + " (" + pct + "%)";
+  document.getElementById("verdictLine").textContent = "Оценка: " + g + " — " + fio + (group ? ", группа " + group : "");
+}
+
+function downloadResult() {
+  var n = QUESTIONS.length;
+  var pct = Math.round(correctCount * 100 / n);
+  var g = grade(pct);
+  var lines = [];
+  lines.push("Ведомость результатов тренажёра");
+  lines.push("Тема: коробка передач (КПП)");
+  lines.push("Дата: " + new Date().toLocaleString("ru-RU"));
+  lines.push("ФИО: " + fio);
+  lines.push("Группа: " + group);
+  lines.push("Правильных ответов: " + correctCount + " из " + n);
+  lines.push("Процент: " + pct + "%");
+  lines.push("Оценка: " + g);
+  lines.push("");
+  lines.push("Разбор вопросов:");
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var q = QUESTIONS[i];
+    var ok = (answers[i] === q.c);
+    lines.push((i + 1) + ". " + q.q);
+    lines.push("   Ответ обучающегося: " + q.a[answers[i]] + (ok ? " (верно)" : " (неверно)"));
+    if (!ok) lines.push("   Правильный ответ: " + q.a[q.c]);
+  }
+  var blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "vedomost_kpp_" + fio.replace(/\s+/g, "_") + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+</script>
+</body>
+</html>
