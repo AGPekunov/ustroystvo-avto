@@ -9,7 +9,7 @@
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: #1e1e2f;
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
   }
@@ -19,7 +19,7 @@
     padding: 28px 26px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.3);
   }
-  h1 { color: #1e3c72; font-size: 22px; margin-bottom: 6px; }
+  h1 { color: #ffa733; font-size: 22px; margin-bottom: 6px; }
   .sub { color: #666; font-size: 14px; margin-bottom: 20px; }
   label { display: block; font-size: 14px; color: #333; margin: 12px 0 4px; }
   input[type=text] {
@@ -28,12 +28,12 @@
   }
   button {
     margin-top: 18px; width: 100%; padding: 12px;
-    font-size: 16px; font-weight: 600; color: #fff;
-    background: #2a5298; border: none; border-radius: 8px;
+    font-size: 16px; font-weight: 600; color: #1e1e2f;
+    background: #ffa733; border: none; border-radius: 8px;
     cursor: pointer;
   }
-  button:hover { background: #1e3c72; }
-  .qnum { color: #2a5298; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  button:hover { background: #e6902a; }
+  .qnum { color: #ffa733; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
   .qtext { font-size: 17px; color: #222; margin-bottom: 16px; line-height: 1.45; }
   .opt {
     display: block; width: 100%; text-align: left;
@@ -42,17 +42,17 @@
     background: #f2f4f8; border: 2px solid transparent;
     border-radius: 8px; cursor: pointer;
   }
-  .opt:hover { border-color: #2a5298; }
+  .opt:hover { border-color: #ffa733; }
   .opt.correct { background: #e2f4e2; border-color: #2e8b57; color: #1d5c37; font-weight: 600; }
   .opt.wrong { background: #fbe3e3; border-color: #c0392b; color: #7a2417; }
   .opt:disabled { cursor: default; }
   .expl {
     margin-top: 8px; padding: 12px 14px;
-    background: #eef2f9; border-left: 4px solid #2a5298;
+    background: #eef2f9; border-left: 4px solid #ffa733;
     border-radius: 0 8px 8px 0;
     font-size: 14px; color: #333; line-height: 1.5;
   }
-  .score { font-size: 26px; font-weight: 700; color: #1e3c72; text-align: center; margin: 10px 0 6px; }
+  .score { font-size: 26px; font-weight: 700; color: #1e1e2f; text-align: center; margin: 10px 0 6px; }
   .verdict { text-align: center; font-size: 15px; color: #555; margin-bottom: 14px; }
   .hidden { display: none; }
 </style>
@@ -83,7 +83,7 @@
     <div class="score" id="scoreLine"></div>
     <div class="verdict" id="verdictLine"></div>
     <button onclick="downloadResult()">Скачать ведомость</button>
-    <button onclick="location.reload()" style="background:#5a6b85;">Пройти ещё раз</button>
+    <button onclick="location.reload()" style="background:#1e1e2f;">Пройти ещё раз</button>
   </div>
 
 </div>
