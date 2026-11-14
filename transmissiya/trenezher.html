@@ -6,43 +6,43 @@
 <title>Тренажёр: Коробка передач автомобилей</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1e2633; color: #eef2f7; min-height: 100vh; }
-  header { background: #14202e; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1e1e2f; color: #eef2f7; min-height: 100vh; }
+  header { background: #161624; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
   header h1 { font-size: 20px; font-weight: 600; }
   .modes { display: flex; gap: 8px; }
-  .mode-btn { padding: 8px 16px; border: 1px solid #3b4a5e; background: #22303f; color: #cfd8e3; border-radius: 8px; cursor: pointer; font-size: 14px; }
-  .mode-btn.active { background: #2f81f7; color: #fff; border-color: #2f81f7; }
+  .mode-btn { padding: 8px 16px; border: 1px solid #3a3a52; background: #26263a; color: #cfd8e3; border-radius: 8px; cursor: pointer; font-size: 14px; }
+  .mode-btn.active { background: #ffa733; color: #1e1e2f; border-color: #ffa733; }
   main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
   .score { font-size: 15px; color: #9fb3c8; }
-  .score b { color: #ffd166; }
-  .card { background: #243244; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,.35); }
+  .score b { color: #ffa733; }
+  .card { background: #26263a; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,.35); }
   .q-count { color: #8fa3ba; font-size: 13px; margin-bottom: 12px; letter-spacing: .5px; }
   .pic { background: #f4f7fb; border-radius: 12px; padding: 12px; display: flex; justify-content: center; margin-bottom: 18px; }
   .pic img.photo { max-width: 100%; max-height: 280px; border-radius: 8px; cursor: zoom-in; }
   .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .opt { padding: 14px 16px; border: 2px solid #3b4a5e; background: #2b3b4f; color: #eef2f7; border-radius: 10px; cursor: pointer; font-size: 16px; text-align: left; transition: .15s; }
-  .opt:hover { border-color: #2f81f7; background: #31465f; }
+  .opt { padding: 14px 16px; border: 2px solid #3a3a52; background: #2c2c40; color: #eef2f7; border-radius: 10px; cursor: pointer; font-size: 16px; text-align: left; transition: .15s; }
+  .opt:hover { border-color: #ffa733; background: #35354c; }
   .opt.correct { border-color: #3fb950; background: #1d3a26; }
   .opt.wrong { border-color: #f85149; background: #3a1d1d; }
   .opt:disabled { cursor: default; opacity: .85; }
   .feedback { min-height: 28px; margin-top: 16px; font-size: 15px; }
   .feedback.ok { color: #3fb950; }
   .feedback.err { color: #f85149; }
-  .next-btn, .restart-btn { margin-top: 14px; padding: 12px 28px; background: #2f81f7; border: none; color: #fff; border-radius: 10px; font-size: 16px; cursor: pointer; display: none; }
-  .next-btn:hover, .restart-btn:hover { background: #1f6fe0; }
+  .next-btn, .restart-btn { margin-top: 14px; padding: 12px 28px; background: #ffa733; border: none; color: #1e1e2f; border-radius: 10px; font-size: 16px; cursor: pointer; display: none; }
+  .next-btn:hover, .restart-btn:hover { background: #e6902a; }
   .pairs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px; }
   .pairs-col { display: flex; flex-direction: column; gap: 10px; }
   .pairs-col h3 { font-size: 13px; color: #8fa3ba; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .pair-item { padding: 12px; border: 2px solid #3b4a5e; background: #2b3b4f; border-radius: 10px; cursor: pointer; text-align: center; font-size: 15px; transition: .15s; }
-  .pair-item.sel { border-color: #ffd166; }
+  .pair-item { padding: 12px; border: 2px solid #3a3a52; background: #2c2c40; border-radius: 10px; cursor: pointer; text-align: center; font-size: 15px; transition: .15s; }
+  .pair-item.sel { border-color: #ffa733; }
   .pair-item.done { border-color: #3fb950; background: #1d3a26; opacity: .55; cursor: default; }
   .mini { position: relative; background: #f4f7fb; border-radius: 8px; padding: 4px; margin-bottom: 6px; }
   .mini img.photo { max-width: 100%; max-height: 110px; border-radius: 6px; display: block; margin: 0 auto; }
   .zoom-btn { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border: none; border-radius: 6px; background: rgba(20,32,46,.75); color: #fff; cursor: pointer; font-size: 13px; }
-  .zoom-btn:hover { background: rgba(47,129,247,.9); }
+  .zoom-btn:hover { background: rgba(255,167,51,.9); }
   .result { text-align: center; padding: 30px; }
   .result h2 { margin-bottom: 12px; }
-  .result .big { font-size: 52px; color: #ffd166; margin: 14px 0; }
+  .result .big { font-size: 52px; color: #ffa733; margin: 14px 0; }
   .result .verdict { font-size: 17px; color: #9fb3c8; margin-bottom: 20px; }
   #lightbox { display: none; position: fixed; inset: 0; background: rgba(10,15,22,.93); z-index: 50; align-items: center; justify-content: center; cursor: zoom-out; }
   #lightbox img { max-width: 94vw; max-height: 94vh; border-radius: 10px; box-shadow: 0 8px 40px rgba(0,0,0,.6); }
