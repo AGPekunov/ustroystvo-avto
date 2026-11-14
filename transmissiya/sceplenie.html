@@ -6,31 +6,31 @@
 <title>Тренажёр по сцеплению</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
-  body { min-height:100vh; background:linear-gradient(160deg,#0f2a4a 0%,#1e3a5f 60%,#274b77 100%); color:#222; padding:20px; }
+  body { min-height:100vh; background:#1e1e2f; color:#222; padding:20px; }
   .wrap { max-width:760px; margin:0 auto; }
   header { color:#fff; text-align:center; padding:28px 10px 20px; }
-  header h1 { font-size:26px; letter-spacing:.5px; }
+  header h1 { font-size:26px; letter-spacing:.5px; color:#ffa733; }
   header p { opacity:.85; margin-top:8px; font-size:14px; }
   .card { background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.25); padding:26px; }
   .qmeta { font-size:13px; color:#777; margin-bottom:10px; }
   .question { font-size:18px; font-weight:600; line-height:1.45; margin-bottom:18px; }
   .opt { display:block; width:100%; text-align:left; background:#f4f6f9; border:2px solid #e2e7ee;
          border-radius:10px; padding:13px 16px; margin-bottom:10px; font-size:15px; cursor:pointer; transition:.15s; }
-  .opt:hover { border-color:#1e3a5f; background:#eef3fa; }
+  .opt:hover { border-color:#ffa733; background:#eef3fa; }
   .opt.correct { border-color:#2e9e5b; background:#e8f7ee; }
   .opt.wrong { border-color:#d64545; background:#fdecec; }
   .opt:disabled { cursor:default; }
-  .btn { display:block; width:100%; background:#1e3a5f; color:#fff; border:none; border-radius:10px;
+  .btn { display:block; width:100%; background:#ffa733; color:#1e1e2f; border:none; border-radius:10px;
          padding:14px; font-size:16px; font-weight:600; cursor:pointer; margin-top:14px; transition:.15s; }
-  .btn:hover { background:#274b77; }
-  .btn.ghost { background:#fff; color:#1e3a5f; border:2px solid #1e3a5f; }
+  .btn:hover { background:#e6902a; }
+  .btn.ghost { background:#fff; color:#1e1e2f; border:2px solid #ffa733; }
   .feedback { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; display:none; }
   .feedback.ok { display:block; background:#e8f7ee; border-left:4px solid #2e9e5b; }
   .feedback.no { display:block; background:#fdecec; border-left:4px solid #d64545; }
-  .result-score { font-size:42px; font-weight:700; color:#1e3a5f; text-align:center; margin:10px 0 6px; }
+  .result-score { font-size:42px; font-weight:700; color:#ffa733; text-align:center; margin:10px 0 6px; }
   .result-verdict { text-align:center; font-size:16px; margin-bottom:20px; }
   .bar { height:10px; background:#e2e7ee; border-radius:6px; overflow:hidden; margin-bottom:18px; }
-  .bar-fill { height:100%; background:#1e3a5f; width:0; transition:.3s; }
+  .bar-fill { height:100%; background:#ffa733; width:0; transition:.3s; }
   .hidden { display:none; }
   footer { text-align:center; color:rgba(255,255,255,.6); font-size:12px; padding:18px 0; }
 </style>
@@ -43,7 +43,7 @@
   </header>
 
   <div class="card" id="start-screen">
-    <h2 style="color:#1e3a5f; margin-bottom:12px;">Как проходит тренажёр</h2>
+    <h2 style="color:#ffa733; margin-bottom:12px;">Как проходит тренажёр</h2>
     <p style="font-size:15px; line-height:1.6; margin-bottom:16px;">
       Всего <b>15 вопросов</b> по устройству и работе сцепления. За каждый правильный ответ — 1 балл.
       После ответа сразу видно верное решение с пояснением. В конце можно выгрузить результат в файл для ведомости.
@@ -63,7 +63,7 @@
   </div>
 
   <div class="card hidden" id="result-screen">
-    <h2 style="text-align:center; color:#1e3a5f;">Результат</h2>
+    <h2 style="text-align:center; color:#ffa733;">Результат</h2>
     <div class="result-score" id="score-line"></div>
     <div class="result-verdict" id="verdict"></div>
     <div id="mistakes" style="margin-bottom:18px;"></div>
@@ -195,7 +195,7 @@ function showResult(){
   document.getElementById('verdict').textContent=v;
   const m=document.getElementById('mistakes');
   if(mistakes.length){
-    m.innerHTML='<h3 style="color:#1e3a5f; margin-bottom:10px;">Ошибки ('+mistakes.length+'):</h3>'+
+    m.innerHTML='<h3 style="color:#1e1e2f; margin-bottom:10px;">Ошибки ('+mistakes.length+'):</h3>'+
       mistakes.map(x=>'<div style="font-size:14px; line-height:1.5; background:#f4f6f9; border-left:4px solid #d64545; border-radius:8px; padding:10px 12px; margin-bottom:8px; white-space:pre-line;">'+x+'</div>').join('');
   } else m.innerHTML='<p style="color:#2e9e5b; font-weight:600; text-align:center;">Без ошибок!</p>';
 }
