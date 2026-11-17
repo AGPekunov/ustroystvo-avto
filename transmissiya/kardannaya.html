@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: карданная передача</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: #1e1e2f;
+    color: #222;
+    padding: 20px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  header { color: #fff; text-align: center; padding: 26px 10px 20px; }
+  header h1 { color: #ffa733; font-size: 26px; letter-spacing: .5px; }
+  header p { color: #a0a0b8; margin-top: 8px; font-size: 14px; }
+  .card {
+    background: #fff;
+    border: 1px solid #ffa733;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    padding: 26px;
+  }
+  .card h2 { color: #1e1e2f; margin-bottom: 12px; font-size: 20px; }
+  .intro { font-size: 15px; line-height: 1.6; margin-bottom: 16px; color: #333; }
+  label { font-size: 14px; display: block; margin-bottom: 6px; color: #333; }
+  input {
+    width: 100%; padding: 12px 14px;
+    border: 2px solid #e2e7ee; border-radius: 10px;
+    font-size: 15px; margin-bottom: 16px;
+  }
+  input:focus { outline: none; border-color: #ffa733; }
+  .btn {
+    display: block; width: 100%;
+    background: #ffa733; color: #1e1e2f;
+    border: none; border-radius: 10px;
+    padding: 14px; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 8px; transition: .15s;
+  }
+  .btn:hover { background: #ffb95c; transform: translateY(-2px); }
+  .btn.ghost { background: #fff; color: #1e1e2f; border: 2px solid #ffa733; }
+  .btn.ghost:hover { background: #fff5e6; transform: translateY(-2px); }
+  .qmeta { font-size: 13px; color: #777; margin-bottom: 10px; }
+  .question { font-size: 18px; font-weight: 600; line-height: 1.45; margin-bottom: 18px; }
+  .opt {
+    display: block; width: 100%; text-align: left;
+    background: #f4f6f9; border: 2px solid #e2e7ee;
+    border-radius: 10px; padding: 13px 16px; margin-bottom: 10px;
+    font-size: 15px; cursor: pointer; transition: .15s; color: #222;
+  }
+  .opt:hover { border-color: #ffa733; background: #fff5e6; }
+  .opt.correct { border-color: #2e9e5b; background: #e8f7ee; }
+  .opt.wrong { border-color: #d64545; background: #fdecec; }
+  .opt:disabled { cursor: default; }
+  .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 14px; display: none; line-height: 1.5; }
+  .feedback.ok { display: block; background: #e8f7ee; border-left: 4px solid #2e9e5b; }
+  .feedback.no { display: block; background: #fdecec; border-left: 4px solid #d64545; }
+  .bar { height: 10px; background: #e2e7ee; border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
+  .bar-fill { height: 100%; background: #ffa733; width: 0; transition: .3s; }
+  .result-score { font-size: 42px; font-weight: 700; color: #1e1e2f; text-align: center; margin: 10px 0 6px; }
+  .result-verdict { text-align: center; font-size: 16px; margin-bottom: 20px; }
+  .detail { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 18px; }
+  .hidden { display: none; }
+  footer { text-align: center; color: #a0a0b8; font-size: 12px; padding: 18px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Тренажёр: карданная передача</h1>
+    <p>Устройство автомобилей · проверка знаний по узлу «карданная передача»</p>
+  </header>
+
+  <div class="card" id="start-screen">
+    <h2>Как проходит тренажёр</h2>
+    <p class="intro">
+      Всего <b>15 вопросов</b> по устройству и работе карданной передачи: крестовины,
+      шлицевые соединения, промежуточные опоры и ШРУСы. За каждый правильный ответ — 1 балл.
+      После ответа сразу видно верное решение с пояснением. В конце можно выгрузить результат в файл для ведомости.
+    </p>
+    <label for="student-name">Фамилия и имя:</label>
+    <input id="student-name" placeholder="Например: Иванов Иван">
+    <label for="student-group">Группа:</label>
+    <input id="student-group" placeholder="Например: АТ-21">
+    <button class="btn" onclick="startQuiz()">Начать</button>
+  </div>
+
+  <div class="card hidden" id="quiz-screen">
+    <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="qmeta" id="qmeta"></div>
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Следующий вопрос</button>
+  </div>
+
+  <div class="card hidden" id="result-screen">
+    <h2 style="text-align:center;">Результат</h2>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-verdict" id="result-verdict"></div>
+    <div class="detail" id="detail"></div>
+    <button class="btn" onclick="downloadResult()">Выгрузить результат</button>
+    <button class="btn ghost" onclick="location.reload()">Пройти заново</button>
+  </div>
+
+  <footer>Тренажёр по карданной передаче · курс «Устройство автомобилей»</footer>
+</div>
+
+<script>
+var QUESTIONS = [
+ {
+  "q": "Для чего предназначена карданная передача?",
+  "a": [
+   "Для передачи крутящего момента между агрегатами, оси которых расположены под углом и на изменяющемся расстоянии",
+   "Для увеличения крутящего момента двигателя",
+   "Для переключения передач во время движения",
+   "Для снижения оборотов коленчатого вала"
+  ],
+  "c": 0,
+  "e": "Карданная передача соединяет коробку передач и ведущий мост, оси которых расположены под углом друг к другу и меняют взаимное положение при работе подвески."
+ },
+ {
+  "q": "Из каких основных элементов состоит карданная передача?",
+  "a": [
+   "Карданные шарниры, карданные валы, промежуточные опоры",
+   "Диски, корзина сцепления, выжимной подшипник",
+   "Шестерни, синхронизаторы, вилки переключения",
+   "Поршни, шатуны, коленчатый вал"
+  ],
+  "c": 0,
+  "e": "В состав карданной передачи входят карданные шарниры, валы (часто из двух секций) и промежуточные опоры с подшипниками."
+ },
+ {
+  "q": "Какая деталь карданного шарнира обеспечивает передачу крутящего момента под углом?",
+  "a": [
+   "Крестовина",
+   "Шпилька",
+   "Пружина",
+   "Вилка переключения передач"
+  ],
+  "c": 0,
+  "e": "Крестовина с двумя парами шипов соединяет две вилки и позволяет передавать вращение под углом до 15–20°."
+ },
+ {
+  "q": "Какие подшипники установлены в шипах крестовины?",
+  "a": [
+   "Игольчатые",
+   "Шариковые радиальные",
+   "Подшипники скольжения с баббитом",
+   "Конические роликовые"
+  ],
+  "c": 0,
+  "e": "В стаканах вилок на шипах крестовины стоят игольчатые подшипники — они воспринимают большие нагрузки при малом диаметре."
+ },
+ {
+  "q": "Как смазывают игольчатые подшипники крестовины?",
+  "a": [
+   "Через маслёнку (тавотницу), запрессованную в крестовину",
+   "Подливая масло в картер карданного вала",
+   "Никак — крестовина необслуживаемая всегда",
+   "Разбрызгиванием масла из коробки передач"
+  ],
+  "c": 0,
+  "e": "Смазка подаётся шприцем через тавотницу в крестовине и по каналам подходит к игольчатым подшипникам. Избыток смазки выходит через клапан, чтобы не выдавить сальники."
+ },
+ {
+  "q": "Для чего в карданном вале предусмотрено шлицевое соединение?",
+  "a": [
+   "Для компенсации изменения длины вала при перемещениях ведущего моста",
+   "Для увеличения передаточного числа",
+   "Для фиксации крестовины",
+   "Для центровки вала с двигателем"
+  ],
+  "c": 0,
+  "e": "При сжатии и отбое подвески расстояние между КПП и мостом меняется, поэтому вал имеет подвижное шлицевое соединение — вал как бы «выдвигается и задвигается»."
+ },
+ {
+  "q": "Когда в карданной передаче применяют промежуточную опору (подвесной подшипник)?",
+  "a": [
+   "Когда карданный вал выполнен из двух секций",
+   "Когда автомобиль заднеприводный",
+   "Когда на автомобиле стоит дизельный двигатель",
+   "Когда вал закреплён жёстко на раме"
+  ],
+  "c": 0,
+  "e": "Длинный вал разделяют на две части, между ними ставят промежуточную опору с шариковым подшипником в эластичной подвеске — так исключают вибрации."
+ },
+ {
+  "q": "Какой недостаток имеет простой карданный шарнир на крестовине?",
+  "a": [
+   "Неравномерность вращения вала при передаче под углом",
+   "Слишком большая масса",
+   "Невозможность передачи большого момента",
+   "Частое разрушение вилки"
+  ],
+  "c": 0,
+  "e": "Один шарнир на крестовине вращает вал неравномерно: за один оборот скорость то увеличивается, то уменьшается. Чем больше угол, тем заметнее неравномерность."
+ },
+ {
+  "q": "Как устраняется неравномерность вращения от простого карданного шарнира?",
+  "a": [
+   "Установкой двух шарниров с одинаковыми углами установки",
+   "Увеличением длины карданного вала",
+   "Смазкой крестовины графитной смазкой",
+   "Установкой более толстого вала"
+  ],
+  "c": 0,
+  "e": "Ставят два шарнира: неравномерность одного гасится вторым, если углы в вилках одинаковы и вилки расположены в одной плоскости."
+ },
+ {
+  "q": "Как расшифровывается аббревиатура ШРУС?",
+  "a": [
+   "Шарнир равных угловых скоростей",
+   "Шарнир продольного усиления сдвига",
+   "Шлицевой узел редуктора сцепления",
+   "Шарнир с реверсивным упором сопротивления"
+  ],
+  "c": 0,
+  "e": "ШРУС — шарнир равных угловых скоростей: передаёт вращение под большим углом без неравномерности вращения."
+ },
+ {
+  "q": "Где чаще всего применяются ШРУСы?",
+  "a": [
+   "В приводах управляемых колёс переднеприводных автомобилей",
+   "В механизме газораспределения",
+   "В рулевом управлении с гидроусилителем",
+   "В системе охлаждения двигателя"
+  ],
+  "c": 0,
+  "e": "Колёса переднеприводного автомобиля и поворачиваются, и работают подвеска — угол до 40–45°. Такой угол простым шарниром на крестовине не передать, поэтому ставят ШРУСы."
+ },
+ {
+  "q": "Для чего служит чехол (пыльник) ШРУСа?",
+  "a": [
+   "Удерживает смазку и защищает шарнир от грязи и воды",
+   "Снижает температуру вала",
+   "Увеличивает ресурс коробки передач",
+   "Служит упором для крестовины"
+  ],
+  "c": 0,
+  "e": "Пыльник герметизирует шарнир: внутри специальная смазка ШРУС-4. Разрыв пыльника быстро приводит к износу шарнира — его меняют сразу."
+ },
+ {
+  "q": "Какой признак указывает на износ крестовины карданного вала?",
+  "a": [
+   "Стук и вибрация при трогании и переключении передач",
+   "Повышенный расход антифриза",
+   "Гул на высоких оборотах холостого хода",
+   "Чёрный дым из выхлопной трубы"
+  ],
+  "c": 0,
+  "e": "Изношенная крестовина даёт люфт: при переключении передач слышен стук («щелчки»), на ходу появляются вибрации."
+ },
+ {
+  "q": "С какой целью карданный вал балансируют?",
+  "a": [
+   "Для устранения вибраций на высоких скоростях",
+   "Для увеличения крутящего момента",
+   "Для снижения шума коробки передач",
+   "Для уменьшения расхода топлива"
+  ],
+  "c": 0,
+  "e": "Даже небольшой дисбаланс вала на высокой скорости вызывает сильную вибрацию кузова, поэтому вал балансируют на заводе, а после ремонта — повторно."
+ },
+ {
+  "q": "Как карданный вал соединяется с фланцем ведущей шестерни главной передачи?",
+  "a": [
+   "Через фланец и болтовое соединение",
+   "Посредством сварки",
+   "Через ремённую передачу",
+   "Через гидромуфту"
+  ],
+  "c": 0,
+  "e": "На конце вала установлен фланец-вилка, который крепится к фланцу главной передачи болтами; момент передаётся дальше на главную передачу и дифференциал."
+ }
+];
+
+var studentName = "", studentGroup = "";
+var order = [], shuffled = [], current = 0, correctCount = 0;
+var answered = [];   // {q, chosen, correct, ok}
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function startQuiz() {
+  studentName = document.getElementById("student-name").value.trim();
+  studentGroup = document.getElementById("student-group").value.trim();
+  if (!studentName) { alert("Введите фамилию и имя"); return; }
+  order = shuffle(QUESTIONS.map(function(_, i) { return i; }));
+  current = 0; correctCount = 0; answered = [];
+  document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("quiz-screen").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+  var q = QUESTIONS[order[current]];
+  shuffled = shuffle(q.a.map(function(text, idx) {
+    return { text: text, correct: idx === q.c };
+  }));
+  document.getElementById("bar-fill").style.width = (current / QUESTIONS.length * 100) + "%";
+  document.getElementById("qmeta").textContent = "Вопрос " + (current + 1) + " из " + QUESTIONS.length;
+  document.getElementById("question").textContent = q.q;
+  var box = document.getElementById("options");
+  box.innerHTML = "";
+  shuffled.forEach(function(opt) {
+    var b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = opt.text;
+    b.onclick = function() { choose(b, opt); };
+    box.appendChild(b);
+  });
+  document.getElementById("feedback").className = "feedback";
+  document.getElementById("next-btn").classList.add("hidden");
+}
+
+function choose(btn, opt) {
+  var q = QUESTIONS[order[current]];
+  var buttons = document.getElementById("options").children;
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].disabled = true;
+    if (shuffled[i].correct) buttons[i].classList.add("correct");
+  }
+  var ok = opt.correct;
+  if (!ok) btn.classList.add("wrong");
+  if (ok) correctCount++;
+  answered.push({ q: q.q, chosen: opt.text, correct: q.a[q.c], ok: ok });
+  var fb = document.getElementById("feedback");
+  fb.className = "feedback " + (ok ? "ok" : "no");
+  fb.innerHTML = (ok ? "✔ Верно! " : "✘ Неверно. Правильный ответ: <b>" + q.a[q.c] + "</b>. ") + q.e;
+  document.getElementById("next-btn").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  current++;
+  if (current < QUESTIONS.length) { showQuestion(); return; }
+  document.getElementById("bar-fill").style.width = "100%";
+  document.getElementById("quiz-screen").classList.add("hidden");
+  document.getElementById("result-screen").classList.remove("hidden");
+  document.getElementById("result-score").textContent = correctCount + " из " + QUESTIONS.length;
+  var pct = correctCount / QUESTIONS.length * 100;
+  var verdict;
+  if (pct >= 85) verdict = "Отлично! Материал усвоен.";
+  else if (pct >= 65) verdict = "Хороший результат, но есть пробелы.";
+  else verdict = "Стоит повторить тему и пройти тренажёр ещё раз.";
+  document.getElementById("result-verdict").textContent = verdict;
+  var rows = answered.map(function(a, i) {
+    return (i + 1) + ". " + (a.ok ? "✔" : "✘") + " " + a.q;
+  });
+  document.getElementById("detail").innerHTML = rows.join("<br>");
+}
+
+function downloadResult() {
+  var lines = [];
+  lines.push("Тренажёр: карданная передача");
+  lines.push("Студент: " + studentName + (studentGroup ? (", группа " + studentGroup) : ""));
+  lines.push("Дата: " + new Date().toLocaleString("ru-RU"));
+  lines.push("Результат: " + correctCount + " из " + QUESTIONS.length +
+             " (" + Math.round(correctCount / QUESTIONS.length * 100) + "%)");
+  lines.push("");
+  answered.forEach(function(a, i) {
+    lines.push((i + 1) + ". " + (a.ok ? "верно" : "НЕВЕРНО") + " — " + a.q);
+    if (!a.ok) {
+      lines.push("   ответ студента: " + a.chosen);
+      lines.push("   правильный ответ: " + a.correct);
+    }
+  });
+  var blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "kardannaya_" + studentName.replace(/\s+/g, "_") + ".txt";
+  a.click();
+}
+</script>
+</body>
+</html>
