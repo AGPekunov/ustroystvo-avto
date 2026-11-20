@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: Кузова и кабины</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: #1e1e2f;
+    padding: 30px 20px 90px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  h1 {
+    color: #ffa733;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: #a0a0b8;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  .card .num {
+    color: #d88a00;
+    font-weight: bold;
+  }
+  .card p.q {
+    color: #2a2a3a;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e8;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    color: #2a2a3a;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  label:hover { border-color: #ffa733; }
+  input[type="radio"] { margin-right: 10px; }
+  .right { border-color: #4caf50 !important; background: rgba(76,175,80,0.08); }
+  .wrong { border-color: #e53935 !important; background: rgba(229,57,53,0.08); }
+  .btn {
+    display: block;
+    margin: 26px auto 0;
+    background: #ffa733;
+    color: #1e1e2f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 40px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,167,51,0.35);
+  }
+  .btn:hover { background: #ffb95c; }
+  #result {
+    display: none;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  #result h2 { color: #1e1e2f; font-size: 22px; margin-bottom: 8px; }
+  #result .score { color: #d88a00; font-size: 30px; font-weight: bold; margin: 8px 0; }
+  #result p { color: #2a2a3a; font-size: 16px; }
+  .again {
+    display: inline-block;
+    margin-top: 14px;
+    color: #d88a00;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 28px;
+    color: #ffa733;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .back:hover { text-decoration: underline; }
+  .logo {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Тренажёр: Кузова и кабины</h1>
+  <p class="subtitle">По материалу лекции 5 &bull; Раздел «Ходовая часть»</p>
+
+  <form id="quiz">
+    <div class="card">
+      <p class="q"><span class="num">1.</span> Чем кузов отличается от кабины?</p>
+      <label><input type="radio" name="q1" value="0"> Ничем, это синонимы</label>
+      <label><input type="radio" name="q1" value="1"> У грузового автомобиля кабина — место водителя, а кузов — грузовая платформа; у легкового кузов вмещает и людей, и груз</label>
+      <label><input type="radio" name="q1" value="0"> Кабина есть только у автобусов</label>
+      <label><input type="radio" name="q1" value="0"> Кузов всегда несущий, а кабина никогда</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">2.</span> Какой кузов называется трёхобъёмным?</p>
+      <label><input type="radio" name="q2" value="0"> Хэтчбек</label>
+      <label><input type="radio" name="q2" value="0"> Минивэн</label>
+      <label><input type="radio" name="q2" value="1"> Седан — отдельные капот, салон и багажник</label>
+      <label><input type="radio" name="q2" value="0"> Универсал</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">3.</span> Чем лифтбек отличается от седана?</p>
+      <label><input type="radio" name="q3" value="0"> У него две двери вместо четырёх</label>
+      <label><input type="radio" name="q3" value="1"> Силуэт как у седана, но задняя дверь открывается вместе со стеклом</label>
+      <label><input type="radio" name="q3" value="0"> У него нет багажника</label>
+      <label><input type="radio" name="q3" value="0"> Он всегда полноприводный</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">4.</span> Кабриолет — это кузов:</p>
+      <label><input type="radio" name="q4" value="0"> С открытым багажным отсеком вместо платформы</label>
+      <label><input type="radio" name="q4" value="1"> Со складной мягкой или жёсткой крышей</label>
+      <label><input type="radio" name="q4" value="0"> С высокой крышей и тремя рядами сидений</label>
+      <label><input type="radio" name="q4" value="0"> Только двухместный без заднего ряда</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">5.</span> Что относится к грузопассажирским кузовам?</p>
+      <label><input type="radio" name="q5" value="1"> «Комби» — салон и грузовой отсек в одном объёме</label>
+      <label><input type="radio" name="q5" value="0"> Рефрижератор</label>
+      <label><input type="radio" name="q5" value="0"> Самосвал</label>
+      <label><input type="radio" name="q5" value="0"> Купе</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">6.</span> Кабина над двигателем (бескапотная компоновка) — её минус?</p>
+      <label><input type="radio" name="q6" value="0"> Плохая обзорность</label>
+      <label><input type="radio" name="q6" value="0"> Слишком длинный автомобиль</label>
+      <label><input type="radio" name="q6" value="1"> Шум и тепло от мотора, доступ к двигателю через откидывающуюся кабину</label>
+      <label><input type="radio" name="q6" value="0"> Меньшая грузоподъёмность</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">7.</span> У каких автомобилей кабина расположена за двигателем (капотная компоновка)?</p>
+      <label><input type="radio" name="q7" value="1"> ЗИЛ-130, ГАЗ-53 — классические грузовики</label>
+      <label><input type="radio" name="q7" value="0"> КамАЗ и современные магистральные тягачи</label>
+      <label><input type="radio" name="q7" value="0"> Автобусы</label>
+      <label><input type="radio" name="q7" value="0"> Ни у каких, такая схема не существует</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">8.</span> Зоны смятия в несущем кузове нужны для того, чтобы:</p>
+      <label><input type="radio" name="q8" value="0"> Уменьшить массу кузова</label>
+      <label><input type="radio" name="q8" value="0"> Улучшить аэродинамику</label>
+      <label><input type="radio" name="q8" value="1"> При ударе смиинаться и поглощать энергию, защищая жёсткую «клетку безопасности» салона</label>
+      <label><input type="radio" name="q8" value="0"> Облегчить доступ к двигателю</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">9.</span> Какие элементы придают несущему кузову жёсткость на кручение?</p>
+      <label><input type="radio" name="q9" value="0"> Резиновые уплотнители дверей</label>
+      <label><input type="radio" name="q9" value="1"> Замкнутые коробчатые профили в порогах, стойках и лонжеронах</label>
+      <label><input type="radio" name="q9" value="0"> Стеклоподъёмники</label>
+      <label><input type="radio" name="q9" value="0"> Вентиляционные люки в крыше</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">10.</span> Пикап — это:</p>
+      <label><input type="radio" name="q10" value="0"> Минивэн с тремя рядами сидений</label>
+      <label><input type="radio" name="q10" value="1"> Кабина и открытая грузовая платформа с отдельной стенкой</label>
+      <label><input type="radio" name="q10" value="0"> Лёгкий двухместный родстер</label>
+      <label><input type="radio" name="q10" value="0"> Фургон с цельнометаллическим кузовом</label>
+    </div>
+
+    <button type="button" class="btn" onclick="check()">Проверить ответы</button>
+  </form>
+
+  <div id="result">
+    <h2>Результат</h2>
+    <div class="score" id="score"></div>
+    <p id="verdict"></p>
+    <button class="again" onclick="reset()">Пройти заново</button>
+  </div>
+
+  <a class="back" href="index.html">&#8592; Назад к разделу</a>
+</div>
+
+<script>
+  var answers = { q1:"1", q2:"1", q3:"1", q4:"1", q5:"1", q6:"1", q7:"1", q8:"1", q9:"1", q10:"1" };
+
+  function check() {
+    var total = 10, correct = 0, unanswered = 0;
+    for (var q in answers) {
+      var chosen = document.querySelector('input[name="' + q + '"]:checked');
+      var labels = document.querySelectorAll('input[name="' + q + '"]');
+      if (!chosen) { unanswered++; continue; }
+      labels.forEach(function(inp) {
+        if (inp.value === "1") inp.parentElement.classList.add("right");
+        else if (inp.checked) inp.parentElement.classList.add("wrong");
+      });
+      if (chosen.value === answers[q]) correct++;
+    }
+    if (unanswered > 0) {
+      alert("Ответьте на все вопросы! Осталось без ответа: " + unanswered);
+      return;
+    }
+    document.getElementById("score").textContent = correct + " из " + total;
+    var v = "";
+    if (correct === 10) v = "Отлично! Кузова и кабины освоены на отлично.";
+    else if (correct >= 8) v = "Хороший результат! Повторите вопросы, где ошиблись.";
+    else if (correct >= 6) v = "Неплохо, но стоит перечитать лекцию 5 ещё раз.";
+    else v = "Пока слабо. Вернитесь к лекции 5 и пройдите тренажёр снова.";
+    document.getElementById("verdict").textContent = v;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function reset() {
+    document.querySelectorAll("label").forEach(function(l) { l.classList.remove("right", "wrong"); });
+    document.querySelectorAll("input[type='radio']").forEach(function(i) { i.checked = false; });
+    document.getElementById("result").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+
+<img src="../logo.jpg" alt="Логотип" class="logo">
+</body>
+</html>

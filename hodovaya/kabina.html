@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: Кабина и оборудование</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: #1e1e2f;
+    padding: 30px 20px 90px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  h1 {
+    color: #ffa733;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: #a0a0b8;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  .card .num {
+    color: #d88a00;
+    font-weight: bold;
+  }
+  .card p.q {
+    color: #2a2a3a;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e8;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    color: #2a2a3a;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  label:hover { border-color: #ffa733; }
+  input[type="radio"] { margin-right: 10px; }
+  .right { border-color: #4caf50 !important; background: rgba(76,175,80,0.08); }
+  .wrong { border-color: #e53935 !important; background: rgba(229,57,53,0.08); }
+  .btn {
+    display: block;
+    margin: 26px auto 0;
+    background: #ffa733;
+    color: #1e1e2f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 40px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,167,51,0.35);
+  }
+  .btn:hover { background: #ffb95c; }
+  #result {
+    display: none;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  #result h2 { color: #1e1e2f; font-size: 22px; margin-bottom: 8px; }
+  #result .score { color: #d88a00; font-size: 30px; font-weight: bold; margin: 8px 0; }
+  #result p { color: #2a2a3a; font-size: 16px; }
+  .again {
+    display: inline-block;
+    margin-top: 14px;
+    color: #d88a00;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 28px;
+    color: #ffa733;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .back:hover { text-decoration: underline; }
+  .logo {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Тренажёр: Кабина и оборудование</h1>
+  <p class="subtitle">По материалу лекции 5 &bull; Раздел «Ходовая часть»</p>
+
+  <form id="quiz">
+    <div class="card">
+      <p class="q"><span class="num">1.</span> Что относится к органам управления автомобилем?</p>
+      <label><input type="radio" name="q1" value="1"> Рулевое колесо, педали, рычаг коробки передач, стояночный тормоз</label>
+      <label><input type="radio" name="q1" value="0"> Спидометр и тахометр</label>
+      <label><input type="radio" name="q1" value="0"> Зеркала заднего вида</label>
+      <label><input type="radio" name="q1" value="0"> Подголовники сидений</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">2.</span> Какие приборы входят в комбинацию приборов (щиток)?</p>
+      <label><input type="radio" name="q2" value="0"> Тормозные колодки и диски</label>
+      <label><input type="radio" name="q2" value="0"> Радиатор и расширительный бачок</label>
+      <label><input type="radio" name="q2" value="1"> Спидометр, тахометр, указатели температуры и давления, уровня топлива</label>
+      <label><input type="radio" name="q2" value="0"> Амортизаторы и пружины</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">3.</span> Что показывает тахометр?</p>
+      <label><input type="radio" name="q3" value="0"> Скорость движения автомобиля</label>
+      <label><input type="radio" name="q3" value="0"> Уровень топлива в баке</label>
+      <label><input type="radio" name="q3" value="0"> Температуру охлаждающей жидкости</label>
+      <label><input type="radio" name="q3" value="1"> Частоту вращения коленчатого вала двигателя</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">4.</span> Контрольные лампы на щитке приборов предназначены для того, чтобы:</p>
+      <label><input type="radio" name="q4" value="0"> Украшать салон</label>
+      <label><input type="radio" name="q4" value="0"> Регулировать яркость света фар</label>
+      <label><input type="radio" name="q4" value="1"> Предупреждать водителя о состоянии систем: давлении масла, заряде АКБ, тормозах и др.</label>
+      <label><input type="radio" name="q4" value="0"> Показывать пройденный путь</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">5.</span> Зачем в кабине зеркала заднего вида?</p>
+      <label><input type="radio" name="q5" value="0"> Для защиты от солнца</label>
+      <label><input type="radio" name="q5" value="0"> Для вентиляции салона</label>
+      <label><input type="radio" name="q5" value="1"> Для наблюдения за обстановкой сзади и сбоку без поворота головы</label>
+      <label><input type="radio" name="q5" value="0"> Для укрепления стоек кабины</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">6.</span> Система отопления и вентиляции кабины обеспечивает:</p>
+      <label><input type="radio" name="q6" value="1"> Поддержание нормальной температуры и очистку воздуха, предотвращение запотевания стёкол</label>
+      <label><input type="radio" name="q6" value="0"> Повышение мощности двигателя</label>
+      <label><input type="radio" name="q6" value="0"> Регулировку углов установки колёс</label>
+      <label><input type="radio" name="q6" value="0"> Охлаждение тормозных механизмов</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">7.</span> Стеклоочистители (дворники) нужны для:</p>
+      <label><input type="radio" name="q7" value="0"> Полировки лобового стекла</label>
+      <label><input type="radio" name="q7" value="1"> Очистки стёкол от воды, снега и грязи для сохранения обзорности</label>
+      <label><input type="radio" name="q7" value="0"> Подъёма и опускания стекла двери</label>
+      <label><input type="radio" name="q7" value="0"> Обдува двигателя</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">8.</span> Ремень безопасности в первую очередь:</p>
+      <label><input type="radio" name="q8" value="0"> Удерживает дверь в закрытом положении</label>
+      <label><input type="radio" name="q8" value="0"> Служит опорой для спины водителя</label>
+      <label><input type="radio" name="q8" value="0"> Снижает шум в кабине</label>
+      <label><input type="radio" name="q8" value="1"> Удерживает человека на месте при торможении и аварии, снижая тяжесть травм</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">9.</span> Регулировка положения сиденья водителя выполняется для того, чтобы:</p>
+      <label><input type="radio" name="q9" value="1"> Обеспечить удобную посадку, полный обзор и свободный доступ к органам управления</label>
+      <label><input type="radio" name="q9" value="0"> Увеличить клиренс автомобиля</label>
+      <label><input type="radio" name="q9" value="0"> Снизить расход топлива</label>
+      <label><input type="radio" name="q9" value="0"> Улучшить сцепление шин с дорогой</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">10.</span> Спальное место в кабине магистрального тягача предназначено:</p>
+      <label><input type="radio" name="q10" value="0"> Для перевозки пассажиров</label>
+      <label><input type="radio" name="q10" value="1"> Для отдыха водителя в дальних рейсах без остановки на гостиницу</label>
+      <label><input type="radio" name="q10" value="0"> Для хранения запасного колеса</label>
+      <label><input type="radio" name="q10" value="0"> Для размещения дополнительного топливного бака</label>
+    </div>
+
+    <button type="button" class="btn" onclick="check()">Проверить ответы</button>
+  </form>
+
+  <div id="result">
+    <h2>Результат</h2>
+    <div class="score" id="score"></div>
+    <p id="verdict"></p>
+    <button class="again" onclick="reset()">Пройти заново</button>
+  </div>
+
+  <a class="back" href="index.html">&#8592; Назад к разделу</a>
+</div>
+
+<script>
+  var answers = { q1:"1", q2:"1", q3:"1", q4:"1", q5:"1", q6:"1", q7:"1", q8:"1", q9:"1", q10:"1" };
+
+  function check() {
+    var total = 10, correct = 0, unanswered = 0;
+    for (var q in answers) {
+      var chosen = document.querySelector('input[name="' + q + '"]:checked');
+      var labels = document.querySelectorAll('input[name="' + q + '"]');
+      if (!chosen) { unanswered++; continue; }
+      labels.forEach(function(inp) {
+        if (inp.value === "1") inp.parentElement.classList.add("right");
+        else if (inp.checked) inp.parentElement.classList.add("wrong");
+      });
+      if (chosen.value === answers[q]) correct++;
+    }
+    if (unanswered > 0) {
+      alert("Ответьте на все вопросы! Осталось без ответа: " + unanswered);
+      return;
+    }
+    document.getElementById("score").textContent = correct + " из " + total;
+    var v = "";
+    if (correct === 10) v = "Отлично! Оборудование кабины освоено на отлично.";
+    else if (correct >= 8) v = "Хороший результат! Повторите вопросы, где ошиблись.";
+    else if (correct >= 6) v = "Неплохо, но стоит перечитать материал ещё раз.";
+    else v = "Пока слабо. Вернитесь к лекциям и пройдите тренажёр снова.";
+    document.getElementById("verdict").textContent = v;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function reset() {
+    document.querySelectorAll("label").forEach(function(l) { l.classList.remove("right", "wrong"); });
+    document.querySelectorAll("input[type='radio']").forEach(function(i) { i.checked = false; });
+    document.getElementById("result").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+
+<img src="../logo.jpg" alt="Логотип" class="logo">
+</body>
+</html>

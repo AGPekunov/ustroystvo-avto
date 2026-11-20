@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёры: ходовая часть</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: #1e1e2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .container { width: 100%; max-width: 560px; }
+  h1 {
+    color: #ffa733;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #a0a0b8;
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 15px;
+  }
+  .tren {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    text-decoration: none;
+    color: #1e1e2f;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .tren:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(255,167,51,0.45);
+    border: 1px solid #ffa733;
+  }
+  .icon {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: rgba(255,167,51,0.15);
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: #ffa733;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tren h2 { font-size: 17px; }
+  .tren h2 span { color: #ffa733; margin-right: 8px; }
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 28px;
+    color: #ffa733;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .back:hover { text-decoration: underline; }
+  .logo {
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ffa733;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Тренажёры: ходовая часть</h1>
+  <p class="subtitle">Выберите тренажёр</p>
+
+  <a class="tren" href="most.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/></svg></div>
+    <h2><span>1.</span>Управляемые мосты</h2>
+  </a>
+
+  <a class="tren" href="podveska.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><line x1="5" y1="4" x2="19" y2="4"/><polyline points="5 20 8 16 5 12 8 8 5 4"/><polyline points="19 20 16 16 19 12 16 8 19 4"/><line x1="12" y1="4" x2="12" y2="20"/></svg></div>
+    <h2><span>2.</span>Подвески</h2>
+  </a>
+
+  <a class="tren" href="kolesa.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><line x1="12" y1="3" x2="12" y2="8.5"/><line x1="12" y1="15.5" x2="12" y2="21"/><line x1="3" y1="12" x2="8.5" y2="12"/><line x1="15.5" y1="12" x2="21" y2="12"/></svg></div>
+    <h2><span>3.</span>Автомобильные колёса и шины</h2>
+  </a>
+
+  <a class="tren" href="kuzov.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 16l1.5-5a2 2 0 0 1 2-1.5h9a2 2 0 0 1 2 1.5L20 16"/><rect x="3" y="16" width="18" height="3" rx="1.5"/><circle cx="7.5" cy="19.5" r="1.2"/><circle cx="16.5" cy="19.5" r="1.2"/></svg></div>
+    <h2><span>4.</span>Кузов</h2>
+  </a>
+
+  <a class="tren" href="kabina.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><line x1="3" y1="12" x2="9.5" y2="12"/><line x1="14.5" y1="12" x2="21" y2="12"/><line x1="12" y1="14.5" x2="12" y2="21"/></svg></div>
+    <h2><span>5.</span>Кабина и оборудование</h2>
+  </a>
+
+  <a class="tren" href="trenezher-kartinki.html">
+    <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+    <h2><span>6.</span>Тренажёр по деталям</h2>
+  </a>
+
+  <a class="back" href="index.html">&#8592; Назад к разделу</a>
+</div>
+
+<img src="logo.png" alt="Логотип" class="logo">
+</body>
+</html>

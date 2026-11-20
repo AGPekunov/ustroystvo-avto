@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: Устройство подвески</title>
+<style>
+  body { margin:0; padding:0; background:#1a1a2e; font-family:Arial,sans-serif; }
+  .container { max-width:800px; margin:0 auto; padding:20px; }
+  h1 { color:#fff; text-align:center; font-size:26px; margin:30px 0 10px; }
+  .hint { color:#9ecbff; text-align:center; margin-bottom:25px; font-size:14px; }
+  .q { background:#fff; border-radius:12px; padding:20px; margin:18px 0; }
+  .qtext { font-size:17px; font-weight:bold; margin-bottom:14px; }
+  .opt { display:block; width:100%; box-sizing:border-box; text-align:left; margin:8px 0; padding:12px 14px; font-size:15px; border:2px solid #ccc; border-radius:8px; background:#fafafa; cursor:pointer; }
+  .opt:hover { border-color:#1a1a2e; }
+  .opt.ok { border-color:#2e7d32; background:#e8f5e9; }
+  .opt.bad { border-color:#c62828; background:#ffebee; }
+  .verdict { margin-top:10px; font-size:15px; font-weight:bold; display:none; }
+  .back { text-align:center; margin:30px 0; }
+  .back a { color:#9ecbff; text-decoration:none; font-size:16px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Тренажёр: Устройство подвески</h1>
+  <p class="hint">Выберите правильный ответ — результат появится сразу под вопросом.</p>
+<div class="q" id="q1">
+  <div class="qtext">1. Что входит в ходовую часть автомобиля?</div>
+    <button class="opt" data-ok="1">Подрамник, подвески, мосты, колёса</button>
+    <button class="opt" data-ok="0">Сцепление, коробка передач, карданная передача</button>
+    <button class="opt" data-ok="0">Рулевое управление и тормоза</button>
+    <button class="opt" data-ok="0">Двигатель и его системы</button>
+  <div class="verdict" id="v1"></div>
+</div>
+<div class="q" id="q2">
+  <div class="qtext">2. Для чего предназначена подвеска автомобиля?</div>
+    <button class="opt" data-ok="1">Для упругого соединения колёс (мостов) с кузовом и сглаживания ударов от дороги</button>
+    <button class="opt" data-ok="0">Для передачи крутящего момента от КПП к колёсам</button>
+    <button class="opt" data-ok="0">Для изменения направления движения автомобиля</button>
+    <button class="opt" data-ok="0">Для запуска двигателя</button>
+  <div class="verdict" id="v2"></div>
+</div>
+<div class="q" id="q3">
+  <div class="qtext">3. Какие элементы относятся к упругим элементам подвески?</div>
+    <button class="opt" data-ok="1">Пружины, листовые рессоры, торсионы, пневмобаллоны</button>
+    <button class="opt" data-ok="0">Амортизаторы, сайлентблоки, шаровые опоры</button>
+    <button class="opt" data-ok="0">Рычаги, поворотный кулак, ступица</button>
+    <button class="opt" data-ok="0">Тормозные колодки и диски</button>
+  <div class="verdict" id="v3"></div>
+</div>
+<div class="q" id="q4">
+  <div class="qtext">4. Для чего служат амортизаторы?</div>
+    <button class="opt" data-ok="1">Для гашения колебаний кузова и колёс после наезда на неровность</button>
+    <button class="opt" data-ok="0">Для смягчения ударов при наезде на препятствие</button>
+    <button class="opt" data-ok="0">Для изменения клиренса автомобиля</button>
+    <button class="opt" data-ok="0">Для передачи усилия от рулевого механизма к колёсам</button>
+  <div class="verdict" id="v4"></div>
+</div>
+<div class="q" id="q5">
+  <div class="qtext">5. Какой элемент подвески соединяет колесо с кузовом (рамой) и передаёт силы и моменты?</div>
+    <button class="opt" data-ok="1">Направляющее устройство (рычаги, тяги)</button>
+    <button class="opt" data-ok="0">Амортизатор</button>
+    <button class="opt" data-ok="0">Пневмобаллон</button>
+    <button class="opt" data-ok="0">Вентилятор системы охлаждения</button>
+  <div class="verdict" id="v5"></div>
+</div>
+<div class="q" id="q6">
+  <div class="qtext">6. Какая подвеска называется зависимой?</div>
+    <button class="opt" data-ok="1">Колёса одной оси связаны жёсткой балкой и перемещаются вместе</button>
+    <button class="opt" data-ok="0">Каждое колесо перемещается независимо от другого</button>
+    <button class="opt" data-ok="0">Подвеска, в которой упругим элементом является рессора</button>
+    <button class="opt" data-ok="0">Подвеска с пневматическими упругими элементами</button>
+  <div class="verdict" id="v6"></div>
+</div>
+<div class="q" id="q7">
+  <div class="qtext">7. Какая подвеска называется независимой?</div>
+    <button class="opt" data-ok="1">Колёса одной оси не связаны жёсткой балкой и перемещаются независимо друг от друга</button>
+    <button class="opt" data-ok="0">Колёса связаны жёсткой балкой</button>
+    <button class="opt" data-ok="0">Подвеска с листовыми рессорами</button>
+    <button class="opt" data-ok="0">Подвеска, у которой нет амортизаторов</button>
+  <div class="verdict" id="v7"></div>
+</div>
+<div class="q" id="q8">
+  <div class="qtext">8. Какой тип подвески использует телескопическую стойку, совмещающую амортизатор и направляющий элемент?</div>
+    <button class="opt" data-ok="1">Подвеска Макферсон</button>
+    <button class="opt" data-ok="0">Подвеска на двойных поперечных рычагах</button>
+    <button class="opt" data-ok="0">Подвеска на продольных рычагах (типа «качающиеся полуоси»)</button>
+    <button class="opt" data-ok="0">Рессорная зависимая подвеска</button>
+  <div class="verdict" id="v8"></div>
+</div>
+<div class="q" id="q9">
+  <div class="qtext">9. Какой упругий элемент представляет собой стержень, работающий на скручивание?</div>
+    <button class="opt" data-ok="1">Торсион</button>
+    <button class="opt" data-ok="0">Пружина</button>
+    <button class="opt" data-ok="0">Рессора</button>
+    <button class="opt" data-ok="0">Резиновый отбойник</button>
+  <div class="verdict" id="v9"></div>
+</div>
+<div class="q" id="q10">
+  <div class="qtext">10. Для чего служит стабилизатор поперечной устойчивости?</div>
+    <button class="opt" data-ok="1">Для уменьшения крена кузова при повороте</button>
+    <button class="opt" data-ok="0">Для увеличения клиренса</button>
+    <button class="opt" data-ok="0">Для сглаживания ударов при наезде на препятствие</button>
+    <button class="opt" data-ok="0">Для передачи крутящего момента на колёса</button>
+  <div class="verdict" id="v10"></div>
+</div>
+<div class="q" id="q11">
+  <div class="qtext">11. Для чего предназначен сайлентблок?</div>
+    <button class="opt" data-ok="1">Для упругого подвижного соединения рычагов подвески с кузовом или подрамником</button>
+    <button class="opt" data-ok="0">Для смазки шаровых опор</button>
+    <button class="opt" data-ok="0">Для регулировки углов установки колёс</button>
+    <button class="opt" data-ok="0">Для крепления запасного колеса</button>
+  <div class="verdict" id="v11"></div>
+</div>
+<div class="q" id="q12">
+  <div class="qtext">12. Какую функцию выполняет шаровая опора?</div>
+    <button class="opt" data-ok="1">Обеспечивает поворот колеса (подвижное шарнирное соединение рычага с поворотным кулаком)</button>
+    <button class="opt" data-ok="0">Передаёт крутящий момент от полуоси к колесу</button>
+    <button class="opt" data-ok="0">Поддерживает нужное давление в шине</button>
+    <button class="opt" data-ok="0">Гасит колебания подвески</button>
+  <div class="verdict" id="v12"></div>
+</div>
+<div class="q" id="q13">
+  <div class="qtext">13. Что такое ступица колеса?</div>
+    <button class="opt" data-ok="1">Деталь, на которой вращается колесо (к ней крепится тормозной диск и подшипник)</button>
+    <button class="opt" data-ok="0">Резиновая втулка рычага</button>
+    <button class="opt" data-ok="0">Элемент рулевого привода</button>
+    <button class="opt" data-ok="0">Часть карданной передачи</button>
+  <div class="verdict" id="v13"></div>
+</div>
+<div class="q" id="q14">
+  <div class="qtext">14. Какая подвеска позволяет регулировать жёсткость и клиренс автоматически?</div>
+    <button class="opt" data-ok="1">Пневматическая (пневмоподвеска)</button>
+    <button class="opt" data-ok="0">Рессорная</button>
+    <button class="opt" data-ok="0">Подвеска Макферсон</button>
+    <button class="opt" data-ok="0">Торсионная</button>
+  <div class="verdict" id="v14"></div>
+</div>
+<div class="q" id="q15">
+  <div class="qtext">15. Какой признак чаще всего указывает на неисправный амортизатор?</div>
+    <button class="opt" data-ok="1">Раскачивание кузова и сильные удары после неровностей, «пробои» подвески</button>
+    <button class="opt" data-ok="0">Гул подшипника на прямой, растущий с ростом скорости</button>
+    <button class="opt" data-ok="0">Увод автомобиля в сторону при отпущенном руле</button>
+    <button class="opt" data-ok="0">Скрип тормозных колодок при торможении</button>
+  <div class="verdict" id="v15"></div>
+</div>
+  <div class="back"><a href="index.html">&larr; На главную страницу раздела</a></div>
+</div>
+<script>
+document.querySelectorAll('.q').forEach(function(q) {
+  var opts = Array.from(q.querySelectorAll('.opt'));
+  opts.forEach(function(b) { b.style.display = 'none'; });
+  // перемешивание вариантов
+  var shuffled = opts.slice();
+  for (var i = shuffled.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = t;
+  }
+  shuffled.forEach(function(b) { q.insertBefore(b, q.querySelector('.verdict')); b.style.display = 'block'; });
+  opts.forEach(function(b) {
+    b.addEventListener('click', function() {
+      opts.forEach(function(x) {
+        x.disabled = true;
+        if (x.dataset.ok === '1') x.classList.add('ok');
+      });
+      var v = q.querySelector('.verdict');
+      if (b.dataset.ok === '1') {
+        v.textContent = 'Верно!';
+        v.style.color = '#2e7d32';
+      } else {
+        b.classList.add('bad');
+        v.textContent = 'Неверно. Правильный ответ подсвечен зелёным.';
+        v.style.color = '#c62828';
+      }
+      v.style.display = 'block';
+    });
+  });
+});
+</script>
+</body>
+</html>

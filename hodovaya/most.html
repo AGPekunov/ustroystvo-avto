@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр: Управляемые мосты</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    background: #1e1e2f;
+    padding: 30px 20px 90px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  h1 {
+    color: #ffa733;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: #a0a0b8;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  .card .num {
+    color: #d88a00;
+    font-weight: bold;
+  }
+  .card p.q {
+    color: #2a2a3a;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e8;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    color: #2a2a3a;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  label:hover { border-color: #ffa733; }
+  input[type="radio"] { margin-right: 10px; }
+  .right { border-color: #4caf50 !important; background: rgba(76,175,80,0.08); }
+  .wrong { border-color: #e53935 !important; background: rgba(229,57,53,0.08); }
+  .btn {
+    display: block;
+    margin: 26px auto 0;
+    background: #ffa733;
+    color: #1e1e2f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 40px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,167,51,0.35);
+  }
+  .btn:hover { background: #ffb95c; }
+  #result {
+    display: none;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  #result h2 { color: #1e1e2f; font-size: 22px; margin-bottom: 8px; }
+  #result .score { color: #d88a00; font-size: 30px; font-weight: bold; margin: 8px 0; }
+  #result p { color: #2a2a3a; font-size: 16px; }
+  .again {
+    display: inline-block;
+    margin-top: 14px;
+    color: #d88a00;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 28px;
+    color: #ffa733;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .back:hover { text-decoration: underline; }
+  .logo {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Тренажёр: Управляемые мосты</h1>
+  <p class="subtitle">По материалу лекции 2 &bull; Раздел «Ходовая часть»</p>
+
+  <form id="quiz">
+    <div class="card">
+      <p class="q"><span class="num">1.</span> Какая функция переднего управляемого моста является главной?</p>
+      <label><input type="radio" name="q1" value="0"> Передача крутящего момента на колёса</label>
+      <label><input type="radio" name="q1" value="1"> Опора передней части автомобиля и обеспечение поворота колёс</label>
+      <label><input type="radio" name="q1" value="0"> Смягчение толчков от неровностей дороги</label>
+      <label><input type="radio" name="q1" value="0"> Изменение передаточного числа</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">2.</span> Вокруг какого элемента поворачивается поворотный кулак?</p>
+      <label><input type="radio" name="q2" value="0"> Карданного шарнира</label>
+      <label><input type="radio" name="q2" value="1"> Шкворня</label>
+      <label><input type="radio" name="q2" value="0"> Полуоси</label>
+      <label><input type="radio" name="q2" value="0"> Регулировочной гайки</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">3.</span> На каких подшипниках установлена ступица колеса?</p>
+      <label><input type="radio" name="q3" value="0"> Шариковых радиальных закрытых</label>
+      <label><input type="radio" name="q3" value="0"> Игольчатых</label>
+      <label><input type="radio" name="q3" value="1"> Конических роликовых</label>
+      <label><input type="radio" name="q3" value="0"> На втулках скольжения</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">4.</span> Какой угол установки колёс отвечает за стабилизацию — самовозврат колёс в прямолинейное движение?</p>
+      <label><input type="radio" name="q4" value="0"> Развал</label>
+      <label><input type="radio" name="q4" value="0"> Сходимость</label>
+      <label><input type="radio" name="q4" value="1"> Продольный наклон оси поворота (кастор)</label>
+      <label><input type="radio" name="q4" value="0"> Угол схождения задних колёс</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">5.</span> Что такое развал колёс?</p>
+      <label><input type="radio" name="q5" value="1"> Наклон плоскости колеса наружу от вертикали в верхней части</label>
+      <label><input type="radio" name="q5" value="0"> Сближение передних сторон колёс</label>
+      <label><input type="radio" name="q5" value="0"> Наклон оси шкворня назад</label>
+      <label><input type="radio" name="q5" value="0"> Разница давления в правом и левом колесе</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">6.</span> Зачем нужна сходимость колёс?</p>
+      <label><input type="radio" name="q6" value="0"> Чтобы повысить дорожный просвет</label>
+      <label><input type="radio" name="q6" value="1"> Компенсировать развал и сопротивление качению, удерживать колёса параллельно</label>
+      <label><input type="radio" name="q6" value="0"> Чтобы облегчить поворот руля</label>
+      <label><input type="radio" name="q6" value="0"> Чтобы увеличить ресурс подшипников ступицы</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">7.</span> Признак зажатых подшипников ступицы?</p>
+      <label><input type="radio" name="q7" value="1"> Гудение и нагрев ступицы</label>
+      <label><input type="radio" name="q7" value="0"> Люфт колеса</label>
+      <label><input type="radio" name="q7" value="0"> Увод автомобиля в сторону</label>
+      <label><input type="radio" name="q7" value="0"> Быстрый износ протектора по краям</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">8.</span> Что заменяет шкворень в подвеске типа «Мак-Ферсон»?</p>
+      <label><input type="radio" name="q8" value="0"> Карданный шарнир</label>
+      <label><input type="radio" name="q8" value="1"> Шаровая опора</label>
+      <label><input type="radio" name="q8" value="0"> Полуось</label>
+      <label><input type="radio" name="q8" value="0"> Стабилизатор</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">9.</span> Какое сечение имеет балка переднего моста грузового автомобиля?</p>
+      <label><input type="radio" name="q9" value="0"> Круглое сплошное</label>
+      <label><input type="radio" name="q9" value="1"> Двутавровое (I-образное) или трубчатое</label>
+      <label><input type="radio" name="q9" value="0"> Коробчатое с отверстиями</label>
+      <label><input type="radio" name="q9" value="0"> Прямоугольное со спицами</label>
+    </div>
+
+    <div class="card">
+      <p class="q"><span class="num">10.</span> Как часто проверяют давление в шинах?</p>
+      <label><input type="radio" name="q10" value="0"> Раз в год</label>
+      <label><input type="radio" name="q10" value="0"> Только после ремонта</label>
+      <label><input type="radio" name="q10" value="1"> Раз в 1–2 недели и перед дальней поездкой</label>
+      <label><input type="radio" name="q10" value="0"> Раз в месяц</label>
+    </div>
+
+    <button type="button" class="btn" onclick="check()">Проверить ответы</button>
+  </form>
+
+  <div id="result">
+    <h2>Результат</h2>
+    <div class="score" id="score"></div>
+    <p id="verdict"></p>
+    <button class="again" onclick="reset()">Пройти заново</button>
+  </div>
+
+  <a class="back" href="index.html">&#8592; Назад к разделу</a>
+</div>
+
+<script>
+  var answers = { q1:"1", q2:"1", q3:"1", q4:"1", q5:"1", q6:"1", q7:"1", q8:"1", q9:"1", q10:"1" };
+
+  function shuffleLabels() {
+    // правильный ответ — всегда value="1", порядок строк в HTML уже перемешан
+  }
+
+  function check() {
+    var total = 10, correct = 0, unanswered = 0;
+    for (var q in answers) {
+      var chosen = document.querySelector('input[name="' + q + '"]:checked');
+      var labels = document.querySelectorAll('input[name="' + q + '"]');
+      if (!chosen) { unanswered++; continue; }
+      labels.forEach(function(inp) {
+        if (inp.value === "1") inp.parentElement.classList.add("right");
+        else if (inp.checked) inp.parentElement.classList.add("wrong");
+      });
+      if (chosen.value === answers[q]) correct++;
+    }
+    if (unanswered > 0) {
+      alert("Ответьте на все вопросы! Осталось без ответа: " + unanswered);
+      return;
+    }
+    document.getElementById("score").textContent = correct + " из " + total;
+    var v = "";
+    if (correct === 10) v = "Отлично! Управляемые мосты освоены на отлично.";
+    else if (correct >= 8) v = "Хороший результат! Повторите вопросы, где ошиблись.";
+    else if (correct >= 6) v = "Неплохо, но стоит перечитать лекцию 2 ещё раз.";
+    else v = "Пока слабо. Вернитесь к лекции 2 и пройдите тренажёр снова.";
+    document.getElementById("verdict").textContent = v;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function reset() {
+    document.querySelectorAll("label").forEach(function(l) { l.classList.remove("right", "wrong"); });
+    document.querySelectorAll("input[type='radio']").forEach(function(i) { i.checked = false; });
+    document.getElementById("result").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+
+<img src="../logo.jpg" alt="Логотип" class="logo">
+</body>
+</html>
